@@ -1,0 +1,17 @@
+﻿Build started 7/22/2015 12:00:45 AM.
+     1>Project "C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Tutorial03\Tutorial03_2012.vcxproj" on node 4 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W4 /WX- /Od /Oi /Oy- /D WIN32 /D _DEBUG /D DEBUG /D PROFILE /D _WINDOWS /D _WIN32_WINNT=0x0600 /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /arch:SSE2 /fp:fast /Zc:wchar_t /Zc:forScope /openmp- /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt  Game.cpp
+         Game.cpp
+     1>c:\users\oleg\documents\visual studio 2013\projects\direct3d tutorial win32 sample\c++\tutorial03\game.cpp(8): warning C4100: 'context' : unreferenced formal parameter
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Debug\Tutorial03.exe" /INCREMENTAL /NOLOGO d3d11.lib d3dcompiler.lib dxguid.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Debug\Tutorial03.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Debug\Tutorial03.lib" /MACHINE:X86 /SAFESEH  Debug\Tutorial03.res
+         Debug\Game.obj
+         Debug\Plane.obj
+         Debug\Tutorial03.obj
+         Tutorial03_2012.vcxproj -> C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Debug\Tutorial03.exe
+     1>Done Building Project "C:\Users\Oleg\Documents\Visual Studio 2013\Projects\Direct3D Tutorial Win32 Sample\C++\Tutorial03\Tutorial03_2012.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.12
