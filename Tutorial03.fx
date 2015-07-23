@@ -1,13 +1,7 @@
-//--------------------------------------------------------------------------------------
-// File: Tutorial02.fx
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-//--------------------------------------------------------------------------------------
-
 cbuffer cbModelData{
 	matrix modelMat;
 	float4 scale;
-	//float2 uv;
+	float2 uv;
 };
 
 cbuffer cbCamera{
@@ -21,7 +15,7 @@ cbuffer cbCamera{
 //--------------------------------------------------------------------------------------
 float4 VS( float4 Pos : POSITION ) : SV_POSITION
 {
-	return mul(Pos,modelMat);
+	return mul(modelMat,Pos);
 }
 
 

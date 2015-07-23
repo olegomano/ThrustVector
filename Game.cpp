@@ -1,11 +1,17 @@
 #include "Game.h"
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
-
-Game::Game()
-{
-
-}
 Plane tstPlane;
+
+Game::Game(){
+	camera.camMat = DirectX::XMMatrixIdentity();
+	camera.prspectiveData.m128_f32[0] = .5f;
+	camera.prspectiveData.m128_f32[1] = 10;
+	camera.prspectiveData.m128_f32[2] = 2;
+	camera.prspectiveData.m128_f32[3] = 0;
+	//AllocConsole();
+}
+
+
 HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context){
 	
 	
@@ -88,10 +94,14 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context){
 }
 
 void Game::onFrame(ID3D11DeviceContext*  context){
-	tstPlane.draw(context);
+	Vec3 force;
+	force.x = .01f;
+	tstPlane.applyForce(&force);
+	tstPlane.draw(context,1);
 }
 
 
 Game::~Game()
 {
+
 }

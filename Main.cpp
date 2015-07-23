@@ -93,7 +93,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         else
         {	
 			g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, Colors::MidnightBlue);
-            Render();
+            //Render();
 			g_gameInstance.onFrame(g_pImmediateContext);
 			g_pSwapChain->Present(0, 0);
         }

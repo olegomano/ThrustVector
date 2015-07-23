@@ -45,17 +45,40 @@ void Plane::setShader(Shader s){
 }
 
 
+inline DirectX::XMVECTOR* Plane::getRight(){
+	return &modelMatrix.r[0];
+}
 
-void Plane::draw(ID3D11DeviceContext*  context) {
+inline DirectX::XMVECTOR* Plane::getUp(){
+	return &modelMatrix.r[1];
+}
+
+inline DirectX::XMVECTOR* Plane::getNormal(){
+	return &modelMatrix.r[2];
+}
+
+inline DirectX::XMVECTOR* Plane::getOrigin(){
+	return &modelMatrix.r[3];
+}
+
+
+
+void Plane::draw(ID3D11DeviceContext*  context, float dt) {
+	//f = m*a;
+	//V 
+	Vec3 displace;
+	calculateDisplace(.016f,&displace);
 	cbModelData updateData;
-	updateData.modelMat = DirectX::XMMatrixIdentity();
+	updateData.modelMat = modelMatrix * DirectX::XMMatrixTranslation(displace.x,displace.y,displace.z);
+	
 	context->UpdateSubresource(shader.pCbModelMatBuffer, 0, nullptr, &updateData, 0, 0);
-
 	context->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	context->IASetInputLayout(shader.pVertexLayout);
 
 	context->VSSetConstantBuffers(0, 1, &shader.pCbModelMatBuffer);
+	context->VSSetConstantBuffers(1, 1, &shader.pCbCameraBuffer);
+
 	context->VSSetShader(shader.pVertexShader, nullptr, 0);
 	context->PSSetShader(shader.pPixelShader, nullptr, 0);
 	context->Draw(6, 0);
