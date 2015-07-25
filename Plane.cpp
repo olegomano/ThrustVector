@@ -10,13 +10,13 @@ HRESULT Plane::allocBuffers(ID3D11Device* pd3dDevice){
 	//unsigned short indecies[] = {0,1,2,0,2,3};
 	DirectX::XMFLOAT3 vertices[] =
 	{
-		DirectX::XMFLOAT3(-.5f,-.5f, 0.5f), //lb
-		DirectX::XMFLOAT3(-.5f, .5f, 0.5f), //lt
-		DirectX::XMFLOAT3( .5f, .5f, 0.5f), //rt
+		DirectX::XMFLOAT3(-.5f,-.5f, 0.0f), //lb
+		DirectX::XMFLOAT3(-.5f, .5f, 0.0f), //lt
+		DirectX::XMFLOAT3( .5f, .5f, 0.0f), //rt
 
-		DirectX::XMFLOAT3(-.5f, -.5f, 0.5f), //lb
-		DirectX::XMFLOAT3( .5f,  .5f, 0.5f), //rt
-		DirectX::XMFLOAT3( .5f, -.5f, 0.5f), //rb
+		DirectX::XMFLOAT3(-.5f, -.5f, 0.0f), //lb
+		DirectX::XMFLOAT3( .5f,  .5f, 0.0f), //rt
+		DirectX::XMFLOAT3( .5f, -.5f, 0.0f), //rb
 	};
 
 
@@ -45,31 +45,26 @@ void Plane::setShader(Shader s){
 }
 
 
-inline DirectX::XMVECTOR* Plane::getRight(){
-	return &modelMatrix.r[0];
-}
+void Plane::rotateAboutCenter(float x, float y, float z){
+	DirectX::XMMATRIX rotateX = DirectX::XMMatrixRotationX(x);
+	DirectX::XMMATRIX rotateY = DirectX::XMMatrixRotationY(y);
+	DirectX::XMMATRIX rotateZ = DirectX::XMMatrixRotationZ(z);
 
-inline DirectX::XMVECTOR* Plane::getUp(){
-	return &modelMatrix.r[1];
-}
+	DirectX::XMMATRIX displace = DirectX::XMMatrixTranslation(modelMatrix.r[3].m128_f32[0], modelMatrix.r[3].m128_f32[1], modelMatrix.r[3].m128_f32[2]);
+	DirectX::XMMATRIX displaceB = DirectX::XMMatrixTranslation(-modelMatrix.r[3].m128_f32[0], -modelMatrix.r[3].m128_f32[1], -modelMatrix.r[3].m128_f32[2]);
 
-inline DirectX::XMVECTOR* Plane::getNormal(){
-	return &modelMatrix.r[2];
+	modelMatrix *= displaceB;
+	modelMatrix *= rotateX;
+	modelMatrix *= rotateY;
+	modelMatrix *= rotateZ;
+	modelMatrix *= displace;
 }
-
-inline DirectX::XMVECTOR* Plane::getOrigin(){
-	return &modelMatrix.r[3];
-}
-
 
 
 void Plane::draw(ID3D11DeviceContext*  context, float dt) {
-	//f = m*a;
-	//V 
-	Vec3 displace;
-	calculateDisplace(.016f,&displace);
+	
 	cbModelData updateData;
-	updateData.modelMat = modelMatrix * DirectX::XMMatrixTranslation(displace.x,displace.y,displace.z);
+	updateData.modelMat = modelMatrix;
 	
 	context->UpdateSubresource(shader.pCbModelMatBuffer, 0, nullptr, &updateData, 0, 0);
 	context->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
@@ -78,12 +73,10 @@ void Plane::draw(ID3D11DeviceContext*  context, float dt) {
 
 	context->VSSetConstantBuffers(0, 1, &shader.pCbModelMatBuffer);
 	context->VSSetConstantBuffers(1, 1, &shader.pCbCameraBuffer);
-
+	
 	context->VSSetShader(shader.pVertexShader, nullptr, 0);
 	context->PSSetShader(shader.pPixelShader, nullptr, 0);
 	context->Draw(6, 0);
-
-	modelMatrix.r;
 }
 
 Plane::~Plane(){

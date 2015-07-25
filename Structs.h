@@ -1,11 +1,15 @@
 #pragma once
+#include <windows.h>
 #include <d3d11_1.h>
 #include <d3dcompiler.h>
 #include <directxmath.h>
 #include <directxcolors.h>
 #include <stdio.h>
 #include <iostream>
-#include <string>
+#include <string.h>
+#include <time.h>
+
+
 
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
@@ -15,15 +19,15 @@ struct Shader{
 	ID3D11InputLayout*      pVertexLayout = nullptr;
 };
 
-struct Camera{
+struct cbCamera{
 	DirectX::XMMATRIX		camMat;
-	DirectX::XMVECTOR		prspectiveData;
+	float		            perpspectiveData[4];
 };
 
 struct cbModelData{
 	DirectX::XMMATRIX	    modelMat;
 	float				    scale[4];
-	//float2 uv;
+	float                   uv[2];
 };
 
 struct Click{
@@ -31,60 +35,56 @@ struct Click{
 	float y;
 };
 
-
-
 struct Vec3{
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	Vec3 operator+(Vec3* f1){
+	inline Vec3 operator+(Vec3 f1){
 		Vec3 f;
-		f.x = x + (*f1).x;
-		f.y = y + (*f1).y;
-		f.z = z + (*f1).z;
+		f.x = x + (f1).x;
+		f.y = y + (f1).y;
+		f.z = z + (f1).z;
 		return f;
 	}
 
-	Vec3 operator-(Vec3* f1){
+	inline Vec3 operator-(Vec3 f1){
 		Vec3 f;
-		f.x = x - (*f1).x;
-		f.y = y - (*f1).y;
-		f.z = z - (*f1).z;
+		f.x = x - (f1).x;
+		f.y = y - (f1).y;
+		f.z = z - (f1).z;
 		return f;
 	}
 
-	void operator++(){
+	inline void operator++(){
 		x++;
 		y++;
 		z++;
 	}
 
-	Vec3 operator*(Vec3* f){
+	inline Vec3 operator*(Vec3 f){
 		Vec3 nV;
-		nV.x = x * (*f).x;
-		nV.y = y * (*f).y;
-		nV.y = z * (*f).z;
+		nV.x = x * (f).x;
+		nV.y = y * (f).y;
+		nV.z = z * (f).z;
 		return nV;
 	}
 
-	Vec3 operator*(float f){
+	inline Vec3 operator*(float f){
 		Vec3 nV;
 		nV.x = x * f;
 		nV.y = y * f;
-		nV.y = z * f;
+		nV.z = z * f;
 		return nV;
 	}
 
-	Vec3 operator/(float f){
+	inline Vec3 operator/(float f){
 		Vec3 nV;
 		nV.x = x / f;
 		nV.y = y / f;
-		nV.y = z / f;
+		nV.z = z / f;
 		return nV;
 	}
 };
-
-
 
 

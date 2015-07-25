@@ -13,12 +13,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 #include <windows.h>
+#include <Windowsx.h>
 #include <d3d11_1.h>
 #include <d3dcompiler.h>
 #include <directxmath.h>
 #include <directxcolors.h>
 #include "resource.h"
 #include "Game.h"
+#include "Structs.h"
 using namespace DirectX;
 
 //--------------------------------------------------------------------------------------
@@ -49,7 +51,8 @@ ID3D11PixelShader*      g_pPixelShader = nullptr;
 ID3D11InputLayout*      g_pVertexLayout = nullptr;
 ID3D11Buffer*           g_pVertexBuffer = nullptr;
 Game					g_gameInstance;
-
+int					    scW = 1024;
+int						scH = 720;
 //--------------------------------------------------------------------------------------
 // Forward declarations
 //--------------------------------------------------------------------------------------
@@ -77,7 +80,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		CleanupDevice();
 		return 0;
 	}
-	HRESULT res = g_gameInstance.init(g_pd3dDevice, g_pImmediateContext);
+	HRESULT res = g_gameInstance.init(g_pd3dDevice, g_pImmediateContext,scW,scH);
 	if (FAILED(res)){
 		return 0;
 	}
@@ -85,9 +88,30 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     MSG msg = {0};
     while( WM_QUIT != msg.message )
     {
-        if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
-        {
-            TranslateMessage( &msg );
+		Click cClick;
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			cClick.x = GET_X_LPARAM(msg.lParam);
+			cClick.y = GET_Y_LPARAM(msg.lParam);
+			switch (msg.message){
+				case WM_MOUSEMOVE:
+					g_gameInstance.mouseMoved(&cClick);
+					break;
+				case WM_LBUTTONDOWN:
+					g_gameInstance.leftCD(&cClick);
+					break;
+				case WM_LBUTTONUP:
+					g_gameInstance.leftCU(&cClick);
+					break;
+				case WM_RBUTTONDOWN:
+					g_gameInstance.leftCD(&cClick);
+					break;
+				case WM_RBUTTONUP:
+					g_gameInstance.rightCU(&cClick);
+					break;
+			}
+
             DispatchMessage( &msg );
         }
         else
@@ -129,7 +153,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
 
     // Create window
     g_hInst = hInstance;
-    RECT rc = { 0, 0, 800, 600 };
+    RECT rc = { 0, 0, scW, scH };
     AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
     g_hWnd = CreateWindow( L"TutorialWindowClass", L"Direct3D 11 Tutorial 3: Shaders",
                            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,

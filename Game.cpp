@@ -1,19 +1,26 @@
 #include "Game.h"
+#include <time.h>
+#define MILLISECONDS /1000;
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
+
+struct mouseStatus{
+	bool lClick = false;
+	bool rClick = false;
+	Click pos;
+};
+
 Plane tstPlane;
+mouseStatus mouse;
 
 Game::Game(){
-	camera.camMat = DirectX::XMMatrixIdentity();
-	camera.prspectiveData.m128_f32[0] = .5f;
-	camera.prspectiveData.m128_f32[1] = 10;
-	camera.prspectiveData.m128_f32[2] = 2;
-	camera.prspectiveData.m128_f32[3] = 0;
-	//AllocConsole();
+
 }
 
 
-HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context){
-	
+
+HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int w, int h){
+	screenH = h;
+	screenW = w;
 	
 	HRESULT hr = S_OK;
 	// Compile the vertex shader
@@ -74,7 +81,7 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context){
 	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	bd.CPUAccessFlags = 0;
-	bd.ByteWidth = sizeof(Camera);
+	bd.ByteWidth = sizeof(cbCamera);
 	hr = pd3dDevice->CreateBuffer(&bd, nullptr, &shader.pCbCameraBuffer);
 
 	bd.ByteWidth = sizeof(cbModelData);
@@ -87,18 +94,63 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context){
 	if (FAILED(hr))
 		return hr;
 	hr = tstPlane.allocBuffers(pd3dDevice);
+
 	if (FAILED(hr))
 		return hr;
 	tstPlane.setShader(shader);
 	return hr;
 }
 
+
 void Game::onFrame(ID3D11DeviceContext*  context){
-	Vec3 force;
-	force.x = .01f;
-	tstPlane.applyForce(&force);
-	tstPlane.draw(context,1);
+	if (mouse.lClick && mouse.rClick){
+
+	}
+	else if (mouse.lClick){
+		Vec3 mouseInWorld;
+		toWorld(&mouse.pos, &mouseInWorld);
+	}
+	else if (mouse.rClick){
+	
+	}
+
+	cbCamera camUpdate;
+	camera.fillOutCb(&camUpdate);
+	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
+	
+	
+	tstPlane.draw(context,.016);
+
 }
+
+void Game::toWorld(Click* c, Vec3* out){
+
+}
+
+
+void Game::mouseMoved(Click* c){
+
+};
+
+void Game::leftCD(Click* c){
+	mouse.lClick = true;
+	mouse.pos = *c;
+};
+
+void Game::leftCU(Click* c){
+	mouse.lClick = false;
+	mouse.pos = *c;
+};
+
+void Game::rightCU(Click* c){
+	mouse.rClick = true;
+	mouse.pos = *c;
+};
+
+void Game::rightCD(Click* c){
+	mouse.rClick = false;
+	mouse.pos = *c;
+};
 
 
 Game::~Game()
