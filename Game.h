@@ -1,10 +1,11 @@
 #pragma once
 #include <d3d11_1.h>
 #include "Structs.h"
-
+#include "Ship.h"
 #include "Plane.h"
 #include "PhysObj.h"
 #include "Camera.h"
+#include "Planet.h"
 
 class Game
 {

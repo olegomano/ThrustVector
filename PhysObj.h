@@ -5,18 +5,18 @@ class PhysObj
 public:
 	PhysObj();
 	virtual void		applyForce(Vec3* f);
-	virtual void		calculateDisplace(float dt, Vec3* out8);
+	virtual void		calculateDisplace(float dt);
 	virtual void		resetForce();
 	Vec3*				getForce();
 	Vec3*				getVelocity();
-	Vec3*				getOrigin();
+	virtual Vec3*		getPosition();
 	float				getMass();
 	~PhysObj();
 protected:
 	Vec3				appliedForce;
 	Vec3				velocity;
 	Vec3				prevVelocity;
-	Vec3				origin;
+	Vec3				position;
 	float				mass = 1;
 };
 

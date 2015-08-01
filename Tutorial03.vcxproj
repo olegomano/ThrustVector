@@ -75,17 +75,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="PhysObj.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="Ship.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="PhysObj.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="Structs.h" />
   </ItemGroup>
   <ItemGroup>

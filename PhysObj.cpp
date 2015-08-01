@@ -9,10 +9,10 @@ void PhysObj::applyForce(Vec3* f){
 	appliedForce = appliedForce + *f;
 }
 
-void PhysObj::calculateDisplace(float dt, Vec3* out){
+void PhysObj::calculateDisplace(float dt){
 	prevVelocity = velocity;
 	velocity = velocity + ( (appliedForce / mass)*dt);
-	*out = velocity*dt;
+	position = position + (velocity*dt);
 	resetForce();
 }
 
@@ -22,14 +22,21 @@ void PhysObj::resetForce(){
 	appliedForce.z = 0;
 }
 
-inline Vec3* PhysObj::getForce(){
+Vec3* PhysObj::getVelocity(){
+	return &velocity;
+}
+
+Vec3* PhysObj::getPosition(){
+	return &position;
+}
+
+Vec3* PhysObj::getForce(){
 	return &appliedForce;
 }
 
-inline float PhysObj::getMass(){
+float PhysObj::getMass(){
 	return mass;
 }
-
 
 PhysObj::~PhysObj()
 {

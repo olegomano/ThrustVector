@@ -3,6 +3,9 @@
 
 Plane::Plane(){
 	modelMatrix = DirectX::XMMatrixIdentity();
+	for (int i = 0; i < 4; i++){
+		scale[i] = 1;
+	}
 }
 
 HRESULT Plane::allocBuffers(ID3D11Device* pd3dDevice){
@@ -61,11 +64,14 @@ void Plane::rotateAboutCenter(float x, float y, float z){
 }
 
 
-void Plane::draw(ID3D11DeviceContext*  context, float dt) {
+void Plane::draw(ID3D11DeviceContext*  context) {
 	
 	cbModelData updateData;
 	updateData.modelMat = modelMatrix;
-	
+	for (int i = 0; i < 4; i++){
+		updateData.scale[i] = scale[i];
+	}
+
 	context->UpdateSubresource(shader.pCbModelMatBuffer, 0, nullptr, &updateData, 0, 0);
 	context->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

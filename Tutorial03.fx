@@ -15,6 +15,9 @@ cbuffer cbCamera : register ( b1 ){
 //--------------------------------------------------------------------------------------
 float4 VS( float4 Pos : POSITION ) : SV_POSITION
 {
+	for (int i = 0; i < 4; i++){
+		Pos[i] *= scale[i];
+	}
 	float4 worldPos = mul(modelMat, Pos);
 	float4 camSpace = mul(camMat, worldPos);
 	float4 finalPos = camSpace;

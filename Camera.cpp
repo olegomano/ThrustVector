@@ -9,10 +9,18 @@ Camera::Camera()
 	perspectiveData[1] = 50;
 	perspectiveData[2] = 1;
 	perspectiveData[3] = 0;
+	for (int i = 0; i < 3; i++){
+		((float*)&position)[i] = mMatrix.r[3].m128_f32[i];
+	}
 }
+
 
 Camera::Camera(Vec3* pos){
 
+}
+
+float Camera::getFocusDistance(){
+	return perspectiveData[2];
 }
 
 void Camera::fillOutCb(cbCamera* out){
@@ -27,16 +35,7 @@ void Camera::setFollow(DirectX::XMVECTOR* follow){
 }
 
 void Camera::updateFrame(){
-	if (followVector != nullptr){
-		DirectX::XMVECTOR mPos = mMatrix.r[3];
-		Vec3 force;
-		force.x =  (followVector->m128_f32[0] - mPos.m128_f32[0]);
-		force.y =  ( followVector->m128_f32[1] - mPos.m128_f32[1]);
-		applyForce(&force);
-		Vec3 displace;
-		calculateDisplace(.016,&displace);
-		mMatrix *= DirectX::XMMatrixTranslation(displace.x, displace.y, displace.z);
-	}
+
 }
 
 

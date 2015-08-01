@@ -1,7 +1,7 @@
 #pragma once
 #include "Structs.h"
 #include "PhysObj.h"
-class Camera : PhysObj
+class Camera : public PhysObj
 {
 public:
 	Camera();
@@ -10,6 +10,7 @@ public:
 	void setFollow(DirectX::XMVECTOR* follow);
 	void fillOutCb(cbCamera* out);
 	void updateFrame();
+	float getFocusDistance();
 	~Camera();
 private:
 	DirectX::XMVECTOR* followVector = nullptr;
