@@ -9,9 +9,7 @@ Camera::Camera()
 	perspectiveData[1] = 50;
 	perspectiveData[2] = 1;
 	perspectiveData[3] = 0;
-	for (int i = 0; i < 3; i++){
-		((float*)&position)[i] = mMatrix.r[3].m128_f32[i];
-	}
+
 }
 
 
@@ -24,18 +22,10 @@ float Camera::getFocusDistance(){
 }
 
 void Camera::fillOutCb(cbCamera* out){
-	out->camMat = mMatrix;
+	out->camMat =DirectX::XMMatrixTranspose(mMatrix);
 	for (int i = 0; i < 4; i++){
 		out->perpspectiveData[i] = perspectiveData[i];
 	}
-}
-
-void Camera::setFollow(DirectX::XMVECTOR* follow){
-	followVector = follow;
-}
-
-void Camera::updateFrame(){
-
 }
 
 

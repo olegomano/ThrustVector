@@ -131,7 +131,7 @@ void Game::toWorld(Click* c, Vec3* out){
 	scConvert.x = ( (c->x / screenW) - .5f)*2;
 	scConvert.y = ( .5f - (c->y / screenH)) * 2;
 	
-	float camDist = camera.getPosition()->z;
+	float camDist = ((Vec3*)camera.getPosition())->z;
 	float focus = camera.getFocusDistance();
 
 	out->x = (scConvert.x / focus)*(focus + camDist);
