@@ -6,6 +6,7 @@
 #include "PhysObj.h"
 #include "Camera.h"
 #include "Planet.h"
+#include "PlaneDrawable.h"
 
 class Game
 {

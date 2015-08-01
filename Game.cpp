@@ -98,28 +98,14 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int 
 	return hr;
 }
 
-Ship mShip;
-Planet planet;
-Planet p2;
-Planet p3;
+PlaneDrawable p;
 void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
-	mShip.create(pd3dDevice,context,shader);
-	planet.create(pd3dDevice, context, shader);
-	p2.create(pd3dDevice, context, shader);
-	p3.create(pd3dDevice, context, shader);
-	
-	Vec3 pos;
-	pos.x = 1;
-	pos.y = 1;
-	p2.setPosition(&pos);
-	pos.x = -1;
-	pos.y = -1;
-	p3.setPosition(&pos);
-	pos.y = 0;
-	pos.x = 0;
-	planet.setPosition(&pos);
+	p.create(pd3dDevice,context,shader);
+}
 
-	mShip.getPlane()->mulScale(.5f,.5f,.5f);
+Shader compileShader(){
+	Shader s;
+	return s;
 }
 
 
@@ -130,24 +116,14 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	else if (mouse.lClick){
 		Vec3 mouseInWorld;
 		toWorld(&mouse.pos, &mouseInWorld);
-		Vec3 applyForce = mouseInWorld - (*mShip.getPosition());
-		applyForce = applyForce / 15;
-		mShip.applyForce(&applyForce);
 	}
 	else if (mouse.rClick){
 	
 	}
 	cbCamera camUpdate;
 	camera.fillOutCb(&camUpdate);
-	planet.applyForceOn(&mShip);
-	//p2.applyForceOn(&mShip);
-	//p3.applyForceOn(&mShip);
 	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
-	mShip.draw(.016f);
-	planet.draw(.016f);
-	//p2.draw(0);
-	//p3.draw(0);
-
+	p.draw(9);
 }
 
 void Game::toWorld(Click* c, Vec3* out){
