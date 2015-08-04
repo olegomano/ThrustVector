@@ -88,7 +88,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     MSG msg = {0};
     while( WM_QUIT != msg.message )
     {
-		Click cClick;
+		Point cClick;
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -105,10 +105,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 					g_gameInstance.leftCU(&cClick);
 					break;
 				case WM_RBUTTONDOWN:
-					g_gameInstance.leftCD(&cClick);
+					g_gameInstance.rightCD(&cClick);
 					break;
 				case WM_RBUTTONUP:
 					g_gameInstance.rightCU(&cClick);
+					break;
+				case WM_KEYDOWN:
+					g_gameInstance.onKeyPressed(msg.wParam);
+					break;
+				case WM_CHAR:
+					g_gameInstance.onKeyPressed(msg.wParam);
 					break;
 			}
 
@@ -370,7 +376,7 @@ HRESULT InitDevice()
         MessageBox( nullptr, L"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", L"Error", MB_OK );
         return hr;
     }
-
+	/*
 	// Create the vertex shader
 	hr = g_pd3dDevice->CreateVertexShader( pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), nullptr, &g_pVertexShader );
 	if( FAILED( hr ) )
@@ -392,7 +398,7 @@ HRESULT InitDevice()
 	pVSBlob->Release();
 	if( FAILED( hr ) )
         return hr;
-
+	
     // Set the input layout
     g_pImmediateContext->IASetInputLayout( g_pVertexLayout );
 
@@ -439,7 +445,7 @@ HRESULT InitDevice()
 
     // Set primitive topology
     g_pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-
+	*/
     return S_OK;
 }
 

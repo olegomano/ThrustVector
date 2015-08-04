@@ -1,7 +1,7 @@
 cbuffer cbModelData : register( b0 ){
 	matrix modelMat;
 	float4 scale;
-	float2 uv;
+	float  uvCoords[12];
 };
 
 cbuffer cbCamera : register ( b1 ){
@@ -9,29 +9,48 @@ cbuffer cbCamera : register ( b1 ){
 	float4 perspectiveData; // near, far, focus
 };
 
+struct VS_INPUT{
+	float4 Pos : POSITION; 
+	float2 uv : UVCOORD;
+};
+
+
+
+struct VS_OUTPUT{
+	float4 pos : SV_POSITION;
+	float2 uv : TEXCOORD0;
+};
+
+Texture2D g_Texture;
+SamplerState g_samplerState;
 
 //--------------------------------------------------------------------------------------
 // Vertex Shader
 //--------------------------------------------------------------------------------------
-float4 VS( float4 Pos : POSITION ) : SV_POSITION
+VS_OUTPUT VS( VS_INPUT input)
 {
+	VS_OUTPUT output;
+	float4 scaledPos;
 	for (int i = 0; i < 4; i++){
-		Pos[i] *= scale[i];
+		scaledPos[i] = input.Pos[i] * scale[i];
 	}
-	float4 worldPos = mul(modelMat, Pos);
-	float4 camSpace = mul(camMat, worldPos);
+	float4 worldPos = mul(modelMat, scaledPos);
+	float4 camSpace = mul(worldPos, camMat);
 	float4 finalPos = camSpace;
 	finalPos[0] = (perspectiveData[2] * finalPos[0]) / (finalPos[2] + perspectiveData[2]);
 	finalPos[1] = (perspectiveData[2] * finalPos[1]) / (finalPos[2] + perspectiveData[2]);
 	finalPos[2] = finalPos[2] / perspectiveData[1];
-	return finalPos;
+	
+	output.pos = finalPos;
+	output.uv = input.uv;
+	return output;
 }
 
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------
-float4 PS( float4 Pos : SV_POSITION ) : SV_Target
+float4 PS(VS_OUTPUT input) : SV_Target
 {
-    return float4( 1.0f, .5f, 0.0f, 1.0f );    // Yellow, with Alpha = 1
+	return g_Texture.Sample(g_samplerState,input.uv);    // Yellow, with Alpha = 1
 }

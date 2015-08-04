@@ -27,12 +27,33 @@ struct cbCamera{
 struct cbModelData{
 	DirectX::XMMATRIX	    modelMat;
 	float				    scale[4];
-	float                   uv[2];
+	float                   uv[12];
 };
 
-struct Click{
+struct Texture{
+	ID3D11Texture2D* texture = nullptr;
+	ID3D11ShaderResourceView* ptextureResView = nullptr;
+	ID3D11SamplerState* psamplerState = nullptr;
+	int w = 0;
+	int h = 0;
+};
+
+struct Point{
 	float x;
 	float y;
+};
+
+struct Rect{
+	float l;
+	float t;
+	float r;
+	float b;
+};
+
+union RectU{
+	Rect r;	//ltrb
+	float f[4]; 
+	Point p[2];
 };
 
 struct Vec3{

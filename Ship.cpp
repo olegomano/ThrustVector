@@ -6,11 +6,11 @@ Ship::Ship()
 }
 
 void Ship::draw(float dt){
-	calculateDisplace(dt);
-	for (int i = 0; i < 3; i++){
-		mPlane.getModelMat()->r[3].m128_f32[i] = ((float*)(&position))[i];
-	}
-	mPlane.draw(context);
+	PlaneDrawable::draw(dt);
+}
+
+const Vec3* Ship::getPosition(){
+	return( Vec3*)(&mMatrix.r[3]);
 }
 
 Ship::~Ship()

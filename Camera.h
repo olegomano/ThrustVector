@@ -8,9 +8,17 @@ public:
 	Camera();
 	Camera(Vec3* pos);
 	void fillOutCb(cbCamera* out);
-	float getFocusDistance();
+	float getNear(){
+		return perspectiveData[0];
+	}
+	float getFar(){
+		return perspectiveData[1];
+	}
+	float getFocusDistance(){
+		return perspectiveData[2];
+	}
 	~Camera();
 private:
-	float perspectiveData[4];
+	float perspectiveData[4]; //near far focus
 };
 

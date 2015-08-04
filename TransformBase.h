@@ -15,6 +15,13 @@ public:
 		mMatrix.r[3].m128_f32[2] += z;
 
 	}
+
+	void setPosition(float x, float y, float z){
+		mMatrix.r[3].m128_f32[0] = x;
+		mMatrix.r[3].m128_f32[1] = y;
+		mMatrix.r[3].m128_f32[2] = z;
+	}
+
 	void rotate(float angle){
 		mMatrix *= DirectX::XMMatrixRotationZ(angle);
 	}
@@ -33,7 +40,11 @@ public:
 		scale[2] = z;
 	}
 
-	const DirectX::XMVECTOR* getPosition(){
+	const float* getScale(){
+		return scale;
+	}
+
+	const DirectX::XMVECTOR* getOrigin(){
 		return &mMatrix.r[3];
 	}
 protected:

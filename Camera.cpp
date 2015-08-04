@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	mMatrix = DirectX::XMMatrixIdentity();
-	mMatrix.r[3].m128_f32[2] = 1;
+	mMatrix.r[3].m128_f32[2] = 10;
 	perspectiveData[0] = 0;
 	perspectiveData[1] = 50;
 	perspectiveData[2] = 1;
@@ -17,9 +17,6 @@ Camera::Camera(Vec3* pos){
 
 }
 
-float Camera::getFocusDistance(){
-	return perspectiveData[2];
-}
 
 void Camera::fillOutCb(cbCamera* out){
 	out->camMat =DirectX::XMMatrixTranspose(mMatrix);

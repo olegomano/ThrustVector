@@ -75,33 +75,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Drawable.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="PhysObj.cpp" />
-    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlaneDrawable.cpp" />
-    <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="WICTextureLoader\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Drawable.h" />
-    <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="DrawableBase.h" />
     <ClInclude Include="ForceGenBase.h" />
     <ClInclude Include="GameObjBase.h" />
+    <ClInclude Include="HitBoxBase.h" />
     <ClInclude Include="PlaneDrawable.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TransformBase.h" />
     <ClInclude Include="PhysObjBase.h" />
-    <ClInclude Include="PhysObj.h" />
-    <ClInclude Include="Plane.h" />
-    <ClInclude Include="Planet.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Ship.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="WICTextureLoader\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Tutorial03.rc" />

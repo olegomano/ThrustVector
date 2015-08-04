@@ -10,11 +10,15 @@ public:
 		DrawableBase::shader = shader;
 	}
 	virtual void draw(float dt) = 0;
+	void setTexture(Texture* t){
+		txt = t;
+	};
 	~DrawableBase(){};
 protected:
 	ID3D11Device* pd3dDevice;
 	ID3D11DeviceContext*  context;
 	Shader* shader;
+	Texture* txt;
 private:
 
 

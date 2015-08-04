@@ -1,12 +1,10 @@
 #pragma once
 #include <d3d11_1.h>
 #include "Structs.h"
-#include "Ship.h"
-#include "Plane.h"
-#include "PhysObj.h"
-#include "Camera.h"
-#include "Planet.h"
 #include "PlaneDrawable.h"
+#include "Ship.h"
+#include "Camera.h"
+#include "WICTextureLoader\WICTextureLoader.h"
 
 class Game
 {
@@ -14,18 +12,19 @@ public:
 	Game();
 	HRESULT		  init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int w, int h);
 	void		  onFrame(ID3D11DeviceContext*  context);
-	void		  mouseMoved(Click* c);
-	void		  leftCD(Click* c);
-	void		  leftCU(Click* c);
-	void		  rightCU(Click* c);
-	void		  rightCD(Click* c);
+	void		  mouseMoved(Point* c);
+	void		  leftCD(Point* c);
+	void		  leftCU(Point* c);
+	void		  rightCU(Point* c);
+	void		  rightCD(Point* c);
+	void		 onKeyPressed(WPARAM key);
+
 	~Game();
 private:
 	int			  screenW;
 	int			  screenH;
 	Shader		  shader;
 	Camera   	  camera;
-	SYSTEMTIME 	  prevFrame;
-	void		  toWorld(Click* c, Vec3* out);
+	void		  toWorld(const Point* c, Vec3* out);
 };
 
