@@ -4,6 +4,7 @@
 #define WINKEY_Z 90
 #define CAMERA_SPEED .0125
 #define FRAME_TIME .016
+
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
 struct mouseStatus{
@@ -13,8 +14,8 @@ struct mouseStatus{
 };
 
 Ship p;
+Ship p2;
 mouseStatus mouse;
-Texture tstTexture;
 Game::Game(){
 
 }
@@ -22,15 +23,25 @@ Game::Game(){
 
 void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader);
 void compileShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* s);
-HRESULT loadTextures(ID3D11Device* pd3dDevice, Texture* txt);
-void createTexture(ID3D11Device* pd3dDevice, ID3D11Texture2D* tex, int w, int h);
-
+ 
 HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int w, int h){
 	screenH = h;
 	screenW = w;
+	textureManager.createManager(pd3dDevice);
 	compileShader(pd3dDevice,context,&shader);
-	loadTextures(pd3dDevice, &tstTexture);
 	initObjects(pd3dDevice,context,&shader);
+	
+	wchar_t* txtName = L"ships/F5S1.png";
+	textureManager.createTexture(txtName);
+	//p.setTexture(textureManager.getTexture(txtName));
+
+	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
+	for (int i = 0; i < drawList->size(); i++){
+		if ((*drawList)[i] != nullptr){
+			(*drawList)[i]->setTexture(textureManager.getTexture(txtName));
+		}
+	}
+
 	return S_OK;
 }
 
@@ -68,58 +79,14 @@ void compileShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shad
 }
 
 
-static int data[256 * 256];
-HRESULT loadTextures(ID3D11Device* pd3dDevice, Texture* txt){
-	for (int i = 0; i < 256 * 256; i++){
-		if (i % 2 == 0){
-			data[i] = 0xFF0000FF;
-		}
-		else{
-			data[i] = 0x0000FFFF;
+void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
+	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
+	for (int i = 0; i < drawList->size(); i++){
+		if ((*drawList)[i] != nullptr){
+			(*drawList)[i]->create(pd3dDevice, context, shader);
 		}
 	}
-
-	D3D11_TEXTURE2D_DESC desc;
-	desc.Width = 256;
-	desc.Height = 256;
-	desc.MipLevels = 1;
-	desc.ArraySize = 1;
-	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	desc.SampleDesc.Count = 1;
-	desc.SampleDesc.Quality = 0;
-	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	desc.CPUAccessFlags = 0;
-	desc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA initData;
-	initData.pSysMem = data;
-	initData.SysMemPitch = static_cast<UINT>(256 * sizeof(int));
-	initData.SysMemSlicePitch = static_cast<UINT>(0);
-
-	HRESULT result;
-	result = pd3dDevice->CreateTexture2D(&desc, &initData, &txt->texture);	
-	result = pd3dDevice->CreateShaderResourceView(txt->texture, nullptr,&txt->ptextureResView);
-	D3D11_SAMPLER_DESC sampDesc;
-	ZeroMemory(&sampDesc, sizeof(sampDesc));
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	sampDesc.MinLOD = 0;
-	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	result = pd3dDevice->CreateSamplerState(&sampDesc, &txt->psamplerState);
-	wchar_t* txtName = L"ships/F5S1.png";
-	DirectX::CreateWICTextureFromFile(pd3dDevice, txtName, (ID3D11Resource**) &txt->texture,&txt->ptextureResView,0);
-	return result;
-}
-
-
-void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
-	p.create(pd3dDevice, context, shader);
 	p.setScale(5, 5, 1);
-	p.setTexture(&tstTexture);
 }
 
 void Game::onKeyPressed(WPARAM key){
@@ -150,6 +117,8 @@ void Game::onKeyPressed(WPARAM key){
 }
 
 void Game::onFrame(ID3D11DeviceContext*  context){
+	wchar_t* txtName = L"ships/F5S1.png";
+	Texture* txt = textureManager.getTexture(txtName);
 	if (mouse.lClick && mouse.rClick){
 		
 	}
@@ -169,7 +138,15 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	p.calculateVelocity(FRAME_TIME);
 	Vec3 displace = p.getVelocity() * FRAME_TIME;
 	p.displace(displace.x,displace.y,displace.z);
-	p.draw(FRAME_TIME);
+	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
+	for (int i = 0; i < drawList->size(); i++){
+		if ((*drawList)[i] != nullptr){
+			(*drawList)[i]->draw(FRAME_TIME);
+		}
+	}
+
+	
+	//p.draw(FRAME_TIME);
 	p.resetFrame();
 }
 

@@ -5,6 +5,8 @@
 #include "Ship.h"
 #include "Camera.h"
 #include "WICTextureLoader\WICTextureLoader.h"
+#include "TextureManager.h"
+#include <vector>
 
 class Game
 {
@@ -21,10 +23,11 @@ public:
 
 	~Game();
 private:
-	int			  screenW;
-	int			  screenH;
-	Shader		  shader;
-	Camera   	  camera;
-	void		  toWorld(const Point* c, Vec3* out);
+	int			   screenW;
+	int			   screenH;
+	Shader		   shader;
+	Camera   	   camera;
+	TextureManager textureManager;
+	void		   toWorld(const Point* c, Vec3* out);
 };
 

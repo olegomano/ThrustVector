@@ -1,7 +1,6 @@
 cbuffer cbModelData : register( b0 ){
 	matrix modelMat;
 	float4 scale;
-	float  uvCoords[12];
 };
 
 cbuffer cbCamera : register ( b1 ){

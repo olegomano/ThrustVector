@@ -27,16 +27,20 @@ struct cbCamera{
 struct cbModelData{
 	DirectX::XMMATRIX	    modelMat;
 	float				    scale[4];
-	float                   uv[12];
 };
 
 struct Texture{
 	ID3D11Texture2D* texture = nullptr;
 	ID3D11ShaderResourceView* ptextureResView = nullptr;
 	ID3D11SamplerState* psamplerState = nullptr;
-	int w = 0;
-	int h = 0;
+	wchar_t* path;
 };
+
+struct ShipTexture{
+	Texture* shipText;
+	Texture* shipNormal;
+};
+
 
 struct Point{
 	float x;
