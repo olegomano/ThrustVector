@@ -44,7 +44,7 @@ void compileShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shad
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "UVCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "UVCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 	UINT numElements = ARRAYSIZE(layout);
 	pd3dDevice->CreateInputLayout(layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &s->pVertexLayout);
@@ -98,12 +98,8 @@ HRESULT loadTextures(ID3D11Device* pd3dDevice, Texture* txt){
 	initData.SysMemSlicePitch = static_cast<UINT>(0);
 
 	HRESULT result;
-	result = pd3dDevice->CreateTexture2D(&desc, &initData, &txt->texture);
-	
-	
+	result = pd3dDevice->CreateTexture2D(&desc, &initData, &txt->texture);	
 	result = pd3dDevice->CreateShaderResourceView(txt->texture, nullptr,&txt->ptextureResView);
-		
-
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
 	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -113,9 +109,9 @@ HRESULT loadTextures(ID3D11Device* pd3dDevice, Texture* txt){
 	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	sampDesc.MinLOD = 0;
 	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-
 	result = pd3dDevice->CreateSamplerState(&sampDesc, &txt->psamplerState);
+	wchar_t* txtName = L"ships/F5S1.png";
+	DirectX::CreateWICTextureFromFile(pd3dDevice, txtName, (ID3D11Resource**) &txt->texture,&txt->ptextureResView,0);
 	return result;
 }
 
