@@ -24,10 +24,23 @@ public:
 
 	void rotate(float angle){
 		mMatrix *= DirectX::XMMatrixRotationZ(angle);
-	}
-	void rotate(float angle, float point){
 
+	}
+
+	void rotateCenter(float angle){
+		rotate(angle, ((Vec3*)getOrigin()));
+	}
+
+	void rotate(float angle, Vec3* p){
+		Vec3 point = *p;
+		displace(-point.x, -point.y, -point.z);
+		rotate(angle);
+		displace(point.x, point.y, point.z);
 	};
+
+	void setNormal(Vec3* newNormal){
+		
+	}
 
 	void mulScale(float x, float y, float z){
 		scale[0] *= x;

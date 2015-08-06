@@ -369,6 +369,7 @@ HRESULT InitDevice()
     g_pImmediateContext->RSSetViewports( 1, &vp );
 
     // Compile the vertex shader
+	/*
     ID3DBlob* pVSBlob = nullptr;
     hr = CompileShaderFromFile( L"Tutorial03.fx", "VS", "vs_4_0", &pVSBlob );
     if( FAILED( hr ) )

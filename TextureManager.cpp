@@ -3,12 +3,13 @@
 
 
 
-std::map<wchar_t*, Texture> textureMap;
+std::map<std::wstring, Texture*> textureMap;
 TextureManager::TextureManager()
 {
 }
 
-void TextureManager::createTexture(wchar_t* name){
+HRESULT TextureManager::createTexture(std::wstring* name){
+	HRESULT result;
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
 	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -18,13 +19,15 @@ void TextureManager::createTexture(wchar_t* name){
 	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	sampDesc.MinLOD = 0;
 	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	Texture newTexture;
-	
-	pDevice->CreateSamplerState(&sampDesc, &newTexture.psamplerState);
-	DirectX::CreateWICTextureFromFile(pDevice, name, (ID3D11Resource**)&newTexture.texture, &newTexture.ptextureResView, 0);
-	newTexture.path = name;
 
-	textureMap[name] = newTexture;
+	Texture* newTexture = new Texture();
+	result = pDevice->CreateSamplerState(&sampDesc, &newTexture->psamplerState);
+	assert(result == S_OK);
+	result = DirectX::CreateWICTextureFromFile(pDevice, name->c_str(), (ID3D11Resource**)&newTexture->texture, &newTexture->ptextureResView, 0);
+	assert(result == S_OK);
+	newTexture->path = new std::wstring(*name);
+	textureMap[*name] = newTexture;
+	return result;
 }
 
 void TextureManager::createShipTexture(ShipTexture* shipTxt){
@@ -34,8 +37,8 @@ void TextureManager::createShipTexture(ShipTexture* shipTxt){
 	shipTxt->shipNormal = getTexture(shipTxt->shipNormal->path);
 }
 
-Texture* TextureManager::getTexture(wchar_t* path){
-	return &textureMap[path];
+Texture* TextureManager::getTexture(std::wstring* path){
+	return textureMap[*path];
 }
 
 
@@ -45,5 +48,5 @@ Texture* TextureManager::getTexture(wchar_t* path){
 
 TextureManager::~TextureManager()
 {
-	
+
 }

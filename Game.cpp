@@ -6,6 +6,7 @@
 #define FRAME_TIME .016
 
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
+using namespace std;
 
 struct mouseStatus{
 	bool lClick = false;
@@ -13,8 +14,13 @@ struct mouseStatus{
 	Point pos;
 };
 
-Ship p;
-Ship p2;
+Ship p(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0,0,0) );
+Ship p2(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0, 1, 0) );
+Ship p3(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(1, 0, 0));
+Ship p4(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(2, 0, 0));
+Ship p5(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0, 2, 0));
+
+
 mouseStatus mouse;
 Game::Game(){
 
@@ -30,18 +36,16 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int 
 	textureManager.createManager(pd3dDevice);
 	compileShader(pd3dDevice,context,&shader);
 	initObjects(pd3dDevice,context,&shader);
-	
-	wchar_t* txtName = L"ships/F5S1.png";
-	textureManager.createTexture(txtName);
-	//p.setTexture(textureManager.getTexture(txtName));
 
+	std::wstring txtName = L"ships/F5S1.png";
+	textureManager.createTexture(&txtName);
+	
 	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
 	for (int i = 0; i < drawList->size(); i++){
 		if ((*drawList)[i] != nullptr){
-			(*drawList)[i]->setTexture(textureManager.getTexture(txtName));
+			(*drawList)[i]->setTexture(textureManager.getTexture(&txtName));
 		}
 	}
-
 	return S_OK;
 }
 
@@ -117,8 +121,8 @@ void Game::onKeyPressed(WPARAM key){
 }
 
 void Game::onFrame(ID3D11DeviceContext*  context){
-	wchar_t* txtName = L"ships/F5S1.png";
-	Texture* txt = textureManager.getTexture(txtName);
+	wstring txtName = L"ships/F5S1.png";
+	Texture* txt = textureManager.getTexture(&txtName);
 	if (mouse.lClick && mouse.rClick){
 		
 	}

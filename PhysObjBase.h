@@ -1,7 +1,9 @@
 #pragma once
 #include "Structs.h"
+#include <vector>
 class PhysObjBase{
 public:
+	PhysObjBase();
 	void applyForce(Vec3* force){
 		PhysObjBase::force = PhysObjBase::force + (*force);
 	}

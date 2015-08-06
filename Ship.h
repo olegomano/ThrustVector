@@ -6,8 +6,8 @@ class Ship : public PlaneDrawable, public PhysObjBase
 public:
 	Ship();
 	Ship(wchar_t* regTxt, wchar_t* normTxt, Vec3* pos){
-		shipTxt.shipNormal->path = normTxt;
-		shipTxt.shipText->path = regTxt;
+		rTxt = regTxt;
+		nTxt = normTxt;
 		displace(pos->x,pos->y,pos->z);
 	}
 	~Ship();
@@ -20,5 +20,7 @@ public:
 	}
 protected:
 	ShipTexture shipTxt;
+	std::wstring rTxt;
+	std::wstring nTxt;
 };
 

@@ -45,6 +45,15 @@
     <ClCompile Include="DrawableList.cpp">
       <Filter>Source Files\BaseLists</Filter>
     </ClCompile>
+    <ClCompile Include="HitBoxList.cpp">
+      <Filter>Source Files\BaseLists</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysObjList.cpp">
+      <Filter>Source Files\BaseLists</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenList.cpp">
+      <Filter>Source Files\BaseLists</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">

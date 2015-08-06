@@ -11,6 +11,7 @@
 
 
 
+
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
 	ID3D11PixelShader*      pPixelShader = nullptr;
@@ -33,7 +34,7 @@ struct Texture{
 	ID3D11Texture2D* texture = nullptr;
 	ID3D11ShaderResourceView* ptextureResView = nullptr;
 	ID3D11SamplerState* psamplerState = nullptr;
-	wchar_t* path;
+	std::wstring* path;
 };
 
 struct ShipTexture{
@@ -61,6 +62,12 @@ union RectU{
 };
 
 struct Vec3{
+	Vec3(){}
+	Vec3(float xx, float yy, float zz){
+		x = xx;
+		y = yy;
+		z = zz;
+	}
 	float x = 0;
 	float y = 0;
 	float z = 0;

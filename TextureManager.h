@@ -2,6 +2,7 @@
 #include <map>
 #include "Structs.h"
 #include "WICTextureLoader\WICTextureLoader.h"
+#include <string>
 class TextureManager
 {
 public:
@@ -9,8 +10,8 @@ public:
 	void createManager(ID3D11Device* pd3dDevice){
 		pDevice = pd3dDevice;
 	};
-	void createTexture(wchar_t* name);
-	Texture* getTexture(wchar_t* name);
+	HRESULT createTexture(std::wstring* name);
+	Texture* getTexture(std::wstring* name);
 	void createShipTexture(ShipTexture* shipTxt);
 	
 	~TextureManager();
