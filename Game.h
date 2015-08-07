@@ -7,6 +7,8 @@
 #include "WICTextureLoader\WICTextureLoader.h"
 #include "TextureManager.h"
 #include <vector>
+#include "Scene.h"
+
 
 class Game
 {
@@ -20,7 +22,6 @@ public:
 	void		  rightCU(Point* c);
 	void		  rightCD(Point* c);
 	void		 onKeyPressed(WPARAM key);
-
 	~Game();
 private:
 	int			   screenW;
@@ -28,6 +29,7 @@ private:
 	Shader		   shader;
 	Camera   	   camera;
 	TextureManager textureManager;
+	Scene		   currentScene;
 	void		   toWorld(const Point* c, Vec3* out);
 };
 

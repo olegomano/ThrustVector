@@ -3,7 +3,7 @@
 #include <vector>
 class PhysObjBase{
 public:
-	PhysObjBase();
+	PhysObjBase(){};
 	void applyForce(Vec3* force){
 		PhysObjBase::force = PhysObjBase::force + (*force);
 	}

@@ -1,9 +1,10 @@
 #pragma once
 #include "Structs.h"
 #include <vector>
+#include "GameObjBase.h"
 class DrawableBase{
 public:
-	DrawableBase();
+	DrawableBase(){};
 	virtual void create(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
 		DrawableBase::pd3dDevice = pd3dDevice;
 		DrawableBase::context = context;
@@ -13,7 +14,6 @@ public:
 	void setTexture(Texture* t){
 		txt = t;
 	};
-	static std::vector<DrawableBase*>* getDrawableList();
 	~DrawableBase(){};
 protected:
 	ID3D11Device* pd3dDevice;

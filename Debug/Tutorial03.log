@@ -1,19 +1,16 @@
-﻿Build started 8/5/2015 9:59:53 PM.
+﻿Build started 8/6/2015 9:21:37 PM.
      1>Project "D:\VisualStudioProjects\ThrustVector\Tutorial03.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Tutorial03.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D UNICODE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TextureManager.cpp
-         TextureManager.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D UNICODE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Scene.cpp
+         Scene.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\VisualStudioProjects\ThrustVector\Debug\ThrustVector.exe" /INCREMENTAL /NOLOGO d3d11.lib d3dcompiler.lib dxguid.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\VisualStudioProjects\ThrustVector\Debug\ThrustVector.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\VisualStudioProjects\ThrustVector\Debug\ThrustVector.lib" /MACHINE:X86 Debug\Tutorial03.res
          Debug\Camera.obj
-         Debug\DrawableList.obj
-         Debug\ForceGenList.obj
          Debug\Game.obj
-         Debug\HitBoxList.obj
          Debug\Main.obj
-         Debug\PhysObjList.obj
          Debug\PlaneDrawable.obj
+         Debug\Scene.obj
          Debug\Ship.obj
          Debug\TextureManager.obj
          Debug\WICTextureLoader.obj
@@ -22,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.85
+Time Elapsed 00:00:01.99

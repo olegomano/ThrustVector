@@ -1,7 +1,8 @@
 #pragma once
 #include "PlaneDrawable.h"
 #include "PhysObjBase.h"
-class Ship : public PlaneDrawable, public PhysObjBase
+#include "HitBoxBase.h"
+class Ship : public PlaneDrawable, public PhysObjBase, public HitBox
 {
 public:
 	Ship();
@@ -14,7 +15,8 @@ public:
 	const virtual Vec3* getPosition();
 	
 	virtual void draw(float dt);
-	
+	virtual void updateHitbox();
+
 	void setShipTexture(ShipTexture* texture){
 		shipTxt = *texture;
 	}

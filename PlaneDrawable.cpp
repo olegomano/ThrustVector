@@ -44,7 +44,7 @@ void PlaneDrawable::create(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  conte
 	offset = 0;
 }
 
-
+/*
 PlaneDrawable::PlaneDrawable()
 {
 	uvCoords[0] = 0; uvCoords[1] = 1; //lb
@@ -56,7 +56,7 @@ PlaneDrawable::PlaneDrawable()
 	uvCoords[10] = 1; uvCoords[11] = 1; //rb
 
 }
-
+*/
 void PlaneDrawable::draw(float dt){
 	
 	cbModelData updateData;
@@ -64,7 +64,8 @@ void PlaneDrawable::draw(float dt){
 	for (int i = 0; i < 4; i++){
 		updateData.scale[i] = scale[i];
 	}
-	ID3D11BlendState* d3dBlendState;
+	
+ID3D11BlendState* d3dBlendState;
 	D3D11_BLEND_DESC omDesc;
 	ZeroMemory(&omDesc,	sizeof(D3D11_BLEND_DESC));
 	omDesc.RenderTarget[0].BlendEnable = true;
@@ -76,8 +77,8 @@ void PlaneDrawable::draw(float dt){
 	omDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	omDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	pd3dDevice->CreateBlendState(&omDesc, &d3dBlendState);
-	context->OMSetBlendState(d3dBlendState, 0, 0xffffffff);
 	
+	context->OMSetBlendState(d3dBlendState, 0, 0xffffffff);
 	context->UpdateSubresource(shader->pCbModelMatBuffer, 0, nullptr, &updateData, 0, 0);
 	context->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

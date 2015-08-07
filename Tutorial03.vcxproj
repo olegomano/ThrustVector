@@ -75,13 +75,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DrawableList.cpp" />
-    <ClCompile Include="ForceGenList.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="HitBoxList.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PhysObjList.cpp" />
     <ClCompile Include="PlaneDrawable.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="WICTextureLoader\WICTextureLoader.cpp" />
@@ -94,6 +91,7 @@
     <ClInclude Include="GameObjBase.h" />
     <ClInclude Include="HitBoxBase.h" />
     <ClInclude Include="PlaneDrawable.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TransformBase.h" />

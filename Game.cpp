@@ -14,13 +14,6 @@ struct mouseStatus{
 	Point pos;
 };
 
-Ship p(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0,0,0) );
-Ship p2(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0, 1, 0) );
-Ship p3(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(1, 0, 0));
-Ship p4(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(2, 0, 0));
-Ship p5(L"ships/F5S1.png", L"ships/F5S1N.png", &Vec3(0, 2, 0));
-
-
 mouseStatus mouse;
 Game::Game(){
 
@@ -36,16 +29,7 @@ HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int 
 	textureManager.createManager(pd3dDevice);
 	compileShader(pd3dDevice,context,&shader);
 	initObjects(pd3dDevice,context,&shader);
-
-	std::wstring txtName = L"ships/F5S1.png";
-	textureManager.createTexture(&txtName);
-	
-	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
-	for (int i = 0; i < drawList->size(); i++){
-		if ((*drawList)[i] != nullptr){
-			(*drawList)[i]->setTexture(textureManager.getTexture(&txtName));
-		}
-	}
+	currentScene.createScene(&textureManager, pd3dDevice, context, &shader);
 	return S_OK;
 }
 
@@ -84,13 +68,7 @@ void compileShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shad
 
 
 void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
-	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
-	for (int i = 0; i < drawList->size(); i++){
-		if ((*drawList)[i] != nullptr){
-			(*drawList)[i]->create(pd3dDevice, context, shader);
-		}
-	}
-	p.setScale(5, 5, 1);
+
 }
 
 void Game::onKeyPressed(WPARAM key){
@@ -121,37 +99,38 @@ void Game::onKeyPressed(WPARAM key){
 }
 
 void Game::onFrame(ID3D11DeviceContext*  context){
-	wstring txtName = L"ships/F5S1.png";
-	Texture* txt = textureManager.getTexture(&txtName);
 	if (mouse.lClick && mouse.rClick){
-		
+
 	}
 	else if (mouse.lClick){
 		Vec3 mouseInWorld;
 		toWorld(&mouse.pos, &mouseInWorld);
-		Vec3 force = (mouseInWorld - *p.getPosition() ) / 100;
-		p.applyForce(&force);
+		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition()) / 100;
+		currentScene.getPlayerShip()->applyForce(&force);
 	}
 	else if (mouse.rClick){
-		p.setPosition(0, 0, 0);
+
 	}
 	cbCamera camUpdate;
 	camera.fillOutCb(&camUpdate);
 	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
-	
-	p.calculateVelocity(FRAME_TIME);
-	Vec3 displace = p.getVelocity() * FRAME_TIME;
-	p.displace(displace.x,displace.y,displace.z);
-	std::vector<DrawableBase*>* drawList = DrawableBase::getDrawableList();
-	for (int i = 0; i < drawList->size(); i++){
-		if ((*drawList)[i] != nullptr){
-			(*drawList)[i]->draw(FRAME_TIME);
-		}
+	vector<PhysObjBase*>*  physList = currentScene.getPhysObjList();
+	vector<DrawableBase*>* drawList = currentScene.getDrawList();
+	vector<Ship*>*		   shipList = currentScene.getShipList();
+
+	for (int i = 0; i < physList->size(); i++){
+		(*physList)[i]->calculateVelocity(FRAME_TIME);
+		(*physList)[i]->resetFrame();
 	}
 
-	
-	//p.draw(FRAME_TIME);
-	p.resetFrame();
+	for (int i = 0; i < shipList->size(); i++){
+		Vec3 displace = (*shipList)[i]->getVelocity() * FRAME_TIME;
+		(*shipList)[i]->displace(displace.x, displace.y, displace.z);
+	}
+
+	for (int i = 0; i < drawList->size(); i++){
+		(*drawList)[i]->draw(FRAME_TIME);
+	}
 }
 
 void Game::toWorld(const Point* c, Vec3* out){
@@ -165,6 +144,10 @@ void Game::toWorld(const Point* c, Vec3* out){
 	out->x = (scConvert.x / focus)*(focus + camDist);
 	out->y = (scConvert.y / focus)*(focus + camDist);
 	out->z = 0;
+
+	out->x -= camera.getOrigin()->m128_f32[0];
+	out->y -= camera.getOrigin()->m128_f32[1];
+
 }
 
 

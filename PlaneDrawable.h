@@ -6,11 +6,11 @@
 class PlaneDrawable : public DrawableBase, public TransformBase
 {
 public:
-	PlaneDrawable();
+	PlaneDrawable(){};
 	~PlaneDrawable();
 	virtual void create(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader);
 	virtual void draw(float dt);
-private:
+protected:
 	ID3D11Buffer*		 pVertexBuffer = nullptr;
 	ID3D11Buffer*		 pIndexBuffer = nullptr;
 	UINT stride = sizeof(DirectX::XMFLOAT3) + sizeof(float) + sizeof(float);
