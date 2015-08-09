@@ -118,19 +118,37 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	vector<DrawableBase*>* drawList = currentScene.getDrawList();
 	vector<Ship*>*		   shipList = currentScene.getShipList();
 
-	for (int i = 0; i < physList->size(); i++){
-		(*physList)[i]->calculateVelocity(FRAME_TIME);
-		(*physList)[i]->resetFrame();
+	
+
+	
+	
+	for (unsigned int i = 0; i < physList->size(); i++){
+		for (unsigned int b = 0; b < physList->size(); b++){
+			if (b != i){
+				(*physList)[i]->checkCollision((*physList)[b]);
+				//(*physList)[i]->calculateVelocity(FRAME_TIME);
+			}
+		}
 	}
 
-	for (int i = 0; i < shipList->size(); i++){
+	for (unsigned int i = 0; i < physList->size(); i++){
+		(*physList)[i]->calculateVelocity(FRAME_TIME);
+	}
+
+	for (unsigned int i = 0; i < shipList->size(); i++){
 		Vec3 displace = (*shipList)[i]->getVelocity() * FRAME_TIME;
 		(*shipList)[i]->displace(displace.x, displace.y, displace.z);
 	}
 
-	for (int i = 0; i < drawList->size(); i++){
+	for (unsigned int i = 0; i < drawList->size(); i++){
 		(*drawList)[i]->draw(FRAME_TIME);
 	}
+
+	for (unsigned int i = 0; i < physList->size(); i++){
+		(*physList)[i]->clearCollisionList();
+		(*physList)[i]->resetFrame();
+	}
+		
 }
 
 void Game::toWorld(const Point* c, Vec3* out){

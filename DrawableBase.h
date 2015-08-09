@@ -2,15 +2,17 @@
 #include "Structs.h"
 #include <vector>
 #include "GameObjBase.h"
-class DrawableBase{
+class DrawableBase : public virtual GameObjBase{
 public:
-	DrawableBase(){};
+	DrawableBase(){
+		type = type | DRAWABLE_TYPE;
+	};
 	virtual void create(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
 		DrawableBase::pd3dDevice = pd3dDevice;
 		DrawableBase::context = context;
 		DrawableBase::shader = shader;
 	}
-	virtual void draw(float dt) = 0;
+	virtual void draw(float dt){};
 	void setTexture(Texture* t){
 		txt = t;
 	};

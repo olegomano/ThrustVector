@@ -12,6 +12,7 @@
 
 
 
+
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
 	ID3D11PixelShader*      pPixelShader = nullptr;
@@ -119,4 +120,18 @@ struct Vec3{
 	}
 };
 
+static Vec3 tUnitVec(Vec3* vec){
+	float mag = vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
+	mag = sqrt(mag);
+	Vec3 unit = *vec / mag;
+	return unit;
+}
 
+static float vecMagSqr(Vec3* vec){
+	return  vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
+}
+
+static float vecMag(Vec3* vec){
+	float magsqr = vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
+	return sqrt(magsqr);
+}

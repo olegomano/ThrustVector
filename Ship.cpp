@@ -1,9 +1,6 @@
 #include "Ship.h"
 
 
-Ship::Ship()
-{
-}
 
 void Ship::draw(float dt){
 	//PlaneDrawable::draw(dt);
@@ -47,13 +44,40 @@ const Vec3* Ship::getPosition(){
 	return( Vec3*)(&mMatrix.r[3]);
 }
 
-void Ship::updateHitbox(){
-	Vec3 currPosition = *getPosition();
-	bounds.r.l = currPosition.x - getScale()[0] / 2.0;
-	bounds.r.t = currPosition.y - getScale()[1] / 2.0f;
-	bounds.r.r = currPosition.x + getScale()[0] / 2.0;
-	bounds.r.b = currPosition.y + getScale()[1] / 2.0f;
+
+
+bool Ship::checkCollision(PhysObjBase* other){
+	bool res = PhysObjBase::checkCollision(other);
+	if (res){
+		/*
+		Vec3 displace = tUnitVec(&velocity)*-1*other->getRadious();
+		Vec3 otherPosition = *const_cast<Vec3*>(other->getPosition());
+		Vec3 newPosition = otherPosition + displace;
+		setPosition(newPosition.x, newPosition.y, newPosition.z);
+		*/
+		/*
+		Vec3 prevVel = velocity;
+		Vec3 velDir = tUnitVec(&velocity);	
+		velocity = (velocity * -1)  / (mass + other->getMass() );
+		Vec3 forceGenerated = (velocity - prevVel);
+		float forceMag = vecMag(&forceGenerated)*mass;
+		if (forceMag != 0){
+			forceGenerated = velDir * forceMag;
+			other->applyForce(&forceGenerated);
+			forceGenerated = forceGenerated * -1 * 2;
+			applyForce(&forceGenerated);
+		}
+		*/
+		Vec3 nullVelocity;
+		other->setVelocity(nullVelocity);
+		setVelocity(nullVelocity);
+
+
+	}
+	return res;
 }
+
+
 
 Ship::~Ship()
 {

@@ -1,11 +1,10 @@
 #include "Scene.h"
 
 const int shipAmount = 2;
-Ship ships[shipAmount] = { Ship(), Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(1,1,0)) };
+Ship ships[shipAmount] = { Ship(), Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(4,4,0)) };
 
 
-Scene::Scene()
-{
+Scene::Scene(){
 	
 }
 
@@ -15,11 +14,21 @@ void Scene::createScene(TextureManager* texture, ID3D11Device* pd3dDevice, ID3D1
 	for (int i = 0; i < shipAmount; i++){
 		ships[i].create(pd3dDevice,context,shader);
 		ships[i].setTexture(texture->getTexture(&txtName));
-		drawableList.push_back(&ships[i]);
-		physObjList.push_back(&ships[i]);
-		shipList.push_back(&ships[i]);
+		ships[i].mulScale(3, 3, 1);
+		registerObject(&ships[i]);
 	}
-	
+}
+
+void Scene::registerObject(Ship* s){
+	drawableList.push_back(s);
+	physObjList.push_back(s);
+	shipList.push_back(s);
+	gameObjectList.push_back(s);
+}
+
+
+void Scene::registerObject(PhysObjBase* p){
+	physObjList.push_back(p);
 }
 
 Ship* Scene::getPlayerShip(){

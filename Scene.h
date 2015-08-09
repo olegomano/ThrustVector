@@ -15,15 +15,15 @@ public:
 	void createScene(TextureManager* manager, ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader);
 	Ship* getPlayerShip();
 	std::vector<DrawableBase*>* getDrawList(){ return &drawableList; };
-	std::vector<HitBox*>*	    getHitboxList(){ return &hitboxList; };
 	std::vector<PhysObjBase*>*  getPhysObjList(){ return &physObjList; };
 	std::vector<Ship*>*			getShipList(){ return &shipList; };
-	void					    registerObject();
+	void					    registerObject(Ship* s);
+	void						registerObject(PhysObjBase* p);
 	~Scene();
 protected:
 	TextureManager*			   sceneTextures;
+	std::vector<GameObjBase*>  gameObjectList;
 	std::vector<DrawableBase*> drawableList;
-	std::vector<HitBox*>	   hitboxList;
 	std::vector<PhysObjBase*>  physObjList;
 	std::vector<Ship*>	       shipList;
 };

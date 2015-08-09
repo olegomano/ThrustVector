@@ -1,14 +1,22 @@
 #pragma once
 #include "Structs.h"
 #include <vector>
-class HitBox
+class HitBox : public virtual GameObjBase
 {
 public:
-	HitBox(){};
+	HitBox(){
+		type |= HITBOX_TYPE;
+	};
 	~HitBox(){};
-	bool isInside(HitBox* other){
-		if (!active) return false;
-		if (isInside(&other->bounds.p[0]) && isInside(&other->bounds.p[1])){
+	virtual bool isInside(HitBox* other){
+		if (!active){
+			return false;
+		}
+		Vec3 distance = *(other->position) - *position;
+		float magSqr = distance.x*distance.x + distance.y*distance.y + distance.z*distance.z;
+		float minDist = (rad + other->rad)*(rad + other->rad);
+		if (magSqr < minDist){
+			hitThisFrame.push_back(other);
 			return true;
 		}
 		return false;
@@ -17,18 +25,22 @@ public:
 	virtual void setStatus(bool status){
 		active = status;
 	}
-	virtual void updateHitbox() = 0;
-protected:
-	RectU bounds;
-	bool active = true;
-private: 
-	boolean isInside(Point* p){
-		if (p->x > bounds.r.l && p->x < bounds.r.r){
-			if (p->y > bounds.r.t && p->y < bounds.r.b){
-				return true;
-			}
-		}
-		return false;
+	virtual void updateHitbox(){};
+	void clearHitList(){
+		hitThisFrame.clear();
 	}
+	Vec3* getPosition(){
+		return position;
+	}
+	float getRadius(){
+		return rad;
+	}
+protected:
+	Vec3* position;
+	float rad;
+	bool active = true;
+	std::vector<HitBox*> hitThisFrame;
+private: 
+
 };
 
