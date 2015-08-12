@@ -89,7 +89,6 @@
     <ClInclude Include="DrawableBase.h" />
     <ClInclude Include="ForceGenBase.h" />
     <ClInclude Include="GameObjBase.h" />
-    <ClInclude Include="HitBoxBase.h" />
     <ClInclude Include="PlaneDrawable.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Ship.h" />

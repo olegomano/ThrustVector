@@ -1,18 +1,19 @@
 #pragma once
 #include "PlaneDrawable.h"
 #include "PhysObjBase.h"
-#include "HitBoxBase.h"
 class Ship : public PlaneDrawable, public PhysObjBase
 {
 public:
 	Ship(){
 		type |= SHIP_TYPE;
+		radious = .4f;
 	}
 	Ship(wchar_t* regTxt, wchar_t* normTxt, Vec3* pos){
 		rTxt = regTxt;
 		nTxt = normTxt;
-		displace(pos->x,pos->y,pos->z);
+		PlaneDrawable::displace(pos->x,pos->y,pos->z);
 		type |= SHIP_TYPE;
+		radious = .4f;
 	}
 	~Ship();
 	const virtual Vec3* getPosition();
@@ -22,6 +23,22 @@ public:
 	void setShipTexture(ShipTexture* texture){
 		shipTxt = *texture;
 	}
+
+	void move(float dt){
+		Vec3 nPos = *const_cast<Vec3*>(getPosition()) +  getVelocity() * dt;
+		setPosition(nPos.x, nPos.y, nPos.z);
+	}
+
+	virtual void setScale(float x, float y, float z){
+		PlaneDrawable::setScale(x, y, z);
+		radious = x;
+	}
+
+	virtual void mulScale(float x, float y, float z){
+		PlaneDrawable::mulScale(x, y, z);
+		radious *= x;
+	}
+
 protected:
 	ShipTexture shipTxt;
 	std::wstring rTxt;

@@ -11,7 +11,7 @@
 
 
 
-
+#define FRAME_TIME .003146
 
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
@@ -45,8 +45,13 @@ struct ShipTexture{
 
 
 struct Point{
-	float x;
-	float y;
+	Point(){}
+	Point(double xx, double yy){
+		x = xx;
+		y = yy;
+	};
+	double x;
+	double y;
 };
 
 struct Rect{
@@ -59,7 +64,7 @@ struct Rect{
 union RectU{
 	Rect r;	//ltrb
 	float f[4]; 
-	Point p[2];
+	//Point p[2] = {(0,0),(0,0)};
 };
 
 struct Vec3{
@@ -121,17 +126,31 @@ struct Vec3{
 };
 
 static Vec3 tUnitVec(Vec3* vec){
-	float mag = vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
-	mag = sqrt(mag);
+	float mag = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
+	mag = sqrtf(mag);
 	Vec3 unit = *vec / mag;
 	return unit;
 }
 
 static float vecMagSqr(Vec3* vec){
-	return  vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
+	return  vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
 }
 
 static float vecMag(Vec3* vec){
-	float magsqr = vec->x*vec->x + vec->x*vec->x + vec->z*vec->z;
-	return sqrt(magsqr);
+	float magsqr = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
+	return sqrtf(magsqr);
+}
+
+static float getDistance(const Vec3* p1, const Vec3* p2){
+	Vec3 diff = *const_cast<Vec3*>(p1) - *const_cast<Vec3*>(p2);
+	return vecMag(&diff);
+}
+
+static Point solveQuadratic(double a, double b, double c){
+	double d = (b*b) - (4 * a*c);
+	double det = sqrt(d);
+	double res1 = (-b + det) / (2 * a);
+	double res2 = (-b - det) / (2 * a);
+	Point p(res1, res2);
+	return p;
 }

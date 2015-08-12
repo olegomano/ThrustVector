@@ -47,8 +47,8 @@ const Vec3* Ship::getPosition(){
 
 
 bool Ship::checkCollision(PhysObjBase* other){
-	bool res = PhysObjBase::checkCollision(other);
-	if (res){
+	bool result = PhysObjBase::checkCollision(other);
+	if (result){
 		/*
 		Vec3 displace = tUnitVec(&velocity)*-1*other->getRadious();
 		Vec3 otherPosition = *const_cast<Vec3*>(other->getPosition());
@@ -69,12 +69,66 @@ bool Ship::checkCollision(PhysObjBase* other){
 		}
 		*/
 		Vec3 nullVelocity;
-		other->setVelocity(nullVelocity);
-		setVelocity(nullVelocity);
+		Vec3 mOrigin = *const_cast<Vec3*>(getPosition());
+		Vec3 oOrigin = *const_cast<Vec3*>(other->getPosition());
+		
+		
+		//Vec3 mDV = mOrigin * getVelocity();
+		//Vec3 oDV = oOrigin * other->getVelocity();
+		//Vec3 dDV = mDV - oDV;
+		//double sumDDV = dDV.x + dDV.y + dDV.z;
+		
+		Vec3 dOrigin = mOrigin - oOrigin;
+		Vec3 dVel = getVelocity() - other->getVelocity();
+		Vec3 dDVDOM = dOrigin * dVel;
+
+		Vec3 dVelSQ = dVel*dVel; 
+		Vec3 dOrigSq = dOrigin*dOrigin;
+
+		double sumDO = dOrigin.x + dOrigin.y + dOrigin.z;
+		double sumDV = dVel.x + dVel.y + dVel.z;
+		
+		double sumDOSq = dOrigSq.x + dOrigSq.y + dOrigSq.z;
+		double sumDVSq = dVelSQ.x + dVelSQ.y + dVelSQ.z;
+		
+		double sumDVDO = dDVDOM.x + dDVDOM.y + dDVDOM.z;
 
 
+		if (sumDV == 0){
+			return result;
+		}
+		double distance = vecMagSqr(&dOrigin);
+		double idealDistance = radious + other->getRadious();
+		idealDistance *= idealDistance;
+		
+		Point res = solveQuadratic(sumDVSq, sumDVDO * 2, sumDOSq - idealDistance);
+		double rRes = res.x < 0 ? res.x : res.y;
+		if (-rRes > FRAME_TIME){
+			return result;
+		}
+		move(rRes);
+		other->move(rRes);
+		Vec3 newVel = (getVelocity()*getMass() + other->getVelocity()*other->getMass()) / (getMass() + other->getMass());
+		
+		Vec3 mOldVel = getVelocity();
+		Vec3 oOldVel = other->getVelocity();
+		
+		Vec3 mAccel = (mOldVel - newVel)/FRAME_TIME;
+		Vec3 oAccel = (oOldVel - newVel)/FRAME_TIME;
+		Vec3 mForce = mAccel * mass;
+		Vec3 oForce = oAccel * other->getMass();
+
+		//applyForce(&oForce);
+		//other->applyForce(&mForce);
+
+		setVelocity(newVel);
+		other->setVelocity(newVel);
+		//int a = 100;
+		//other->setVelocity(nullVelocity);
+		//setVelocity(nullVelocity);
+	
 	}
-	return res;
+	return result;
 }
 
 

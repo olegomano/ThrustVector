@@ -3,7 +3,7 @@
 #define WINKEY_X 88
 #define WINKEY_Z 90
 #define CAMERA_SPEED .0125
-#define FRAME_TIME .016
+
 
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 using namespace std;
@@ -105,7 +105,7 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	else if (mouse.lClick){
 		Vec3 mouseInWorld;
 		toWorld(&mouse.pos, &mouseInWorld);
-		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition()) / 100;
+		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition());
 		currentScene.getPlayerShip()->applyForce(&force);
 	}
 	else if (mouse.rClick){
@@ -117,37 +117,36 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	vector<PhysObjBase*>*  physList = currentScene.getPhysObjList();
 	vector<DrawableBase*>* drawList = currentScene.getDrawList();
 	vector<Ship*>*		   shipList = currentScene.getShipList();
-
-	
-
 	
 	
-	for (unsigned int i = 0; i < physList->size(); i++){
-		for (unsigned int b = 0; b < physList->size(); b++){
-			if (b != i){
-				(*physList)[i]->checkCollision((*physList)[b]);
-				//(*physList)[i]->calculateVelocity(FRAME_TIME);
-			}
-		}
-	}
-
 	for (unsigned int i = 0; i < physList->size(); i++){
 		(*physList)[i]->calculateVelocity(FRAME_TIME);
 	}
 
 	for (unsigned int i = 0; i < shipList->size(); i++){
-		Vec3 displace = (*shipList)[i]->getVelocity() * FRAME_TIME;
-		(*shipList)[i]->displace(displace.x, displace.y, displace.z);
+		(*shipList)[i]->move(FRAME_TIME);
 	}
 
-	for (unsigned int i = 0; i < drawList->size(); i++){
-		(*drawList)[i]->draw(FRAME_TIME);
+	for (unsigned int i = 0; i < physList->size(); i++){
+		for (unsigned int b = 0; b < physList->size(); b++){
+			if (b != i){
+				(*physList)[i]->checkCollision((*physList)[b]);
+			}
+		}
 	}
 
 	for (unsigned int i = 0; i < physList->size(); i++){
 		(*physList)[i]->clearCollisionList();
 		(*physList)[i]->resetFrame();
 	}
+
+	
+
+	for (unsigned int i = 0; i < drawList->size(); i++){
+		(*drawList)[i]->draw(FRAME_TIME);
+	}
+
+	
 		
 }
 

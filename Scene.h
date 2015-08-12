@@ -6,7 +6,6 @@
 #include <winstring.h>
 #include "Ship.h"
 #include "DrawableBase.h"
-#include "HitBoxBase.h"
 #include "PhysObjBase.h"
 class Scene
 {

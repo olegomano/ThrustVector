@@ -1,8 +1,19 @@
 #include "Scene.h"
 
-const int shipAmount = 2;
-Ship ships[shipAmount] = { Ship(), Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(4,4,0)) };
-
+const int shipAmount = 12;
+Ship ships[shipAmount] = { Ship(),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(0, 6, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(0, 9, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(6, 12, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(-6, 15, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(-6, 18, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(0, 21, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(0, 24, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(3, 27, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(-3, 30, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(-3, 33, 0)),
+						   Ship(L"ships/F5S1.png", L"ships/F5S1.png", &Vec3(-3, 36, 0)),
+};
 
 Scene::Scene(){
 	
@@ -32,7 +43,7 @@ void Scene::registerObject(PhysObjBase* p){
 }
 
 Ship* Scene::getPlayerShip(){
-	return ships;
+	return &ships[shipAmount - 1];
 
 }
 

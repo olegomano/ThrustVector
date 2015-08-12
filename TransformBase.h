@@ -47,7 +47,7 @@ public:
 		scale[1] *= y;
 		scale[2] *= z;
 	}
-	void setScale(float x, float y, float z){
+	virtual void setScale(float x, float y, float z){
 		scale[0] = x;
 		scale[1] = y;
 		scale[2] = z;

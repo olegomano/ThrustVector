@@ -16,7 +16,7 @@ public:
 	}
 	
 	virtual bool checkCollision(PhysObjBase* other){
-		if (hasCollision(other)) return false; 
+		if (hasCollision(other)) return false;
 		Vec3 distance = *const_cast<Vec3*>(getPosition()) - *const_cast<Vec3*>(other->getPosition());
 		float distMag = distance.x*distance.x + distance.z*distance.z + distance.y*distance.y;
 		float radMag = (radious + other->radious)* (radious + other->radious);
@@ -26,6 +26,10 @@ public:
 			return true;
 		}
 		return false;
+	};
+
+	virtual void move(float dt){
+		
 	};
 
 	void resetFrame(){
