@@ -11,7 +11,7 @@
 
 
 
-#define FRAME_TIME .003146
+#define FRAME_TIME .0016
 
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
@@ -20,6 +20,7 @@ struct Shader{
 	ID3D11Buffer*			pCbCameraBuffer = nullptr;
 	ID3D11InputLayout*      pVertexLayout = nullptr;
 };
+
 
 struct cbCamera{
 	DirectX::XMMATRIX		camMat;

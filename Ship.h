@@ -8,7 +8,7 @@ public:
 		type |= SHIP_TYPE;
 		radious = .4f;
 	}
-	Ship(wchar_t* regTxt, wchar_t* normTxt, Vec3* pos){
+	Ship(const wchar_t* regTxt,const wchar_t* normTxt, Vec3* pos){
 		rTxt = regTxt;
 		nTxt = normTxt;
 		PlaneDrawable::displace(pos->x,pos->y,pos->z);
@@ -38,6 +38,8 @@ public:
 		PlaneDrawable::mulScale(x, y, z);
 		radious *= x;
 	}
+
+	virtual void resolveCollisions(float dt);
 
 protected:
 	ShipTexture shipTxt;
