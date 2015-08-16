@@ -70,14 +70,14 @@ union RectU{
 
 struct Vec3{
 	Vec3(){}
-	Vec3(float xx, float yy, float zz){
+	Vec3(double xx, double yy, double zz){
 		x = xx;
 		y = yy;
 		z = zz;
 	}
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	double x = 0;
+	double y = 0;
+	double z = 0;
 
 	inline Vec3 operator+(Vec3 f1){
 		Vec3 f;
@@ -109,7 +109,7 @@ struct Vec3{
 		return nV;
 	}
 
-	inline Vec3 operator*(float f){
+	inline Vec3 operator*(double f){
 		Vec3 nV;
 		nV.x = x * f;
 		nV.y = y * f;
@@ -117,7 +117,7 @@ struct Vec3{
 		return nV;
 	}
 
-	inline Vec3 operator/(float f){
+	inline Vec3 operator/(double f){
 		Vec3 nV;
 		nV.x = x / f;
 		nV.y = y / f;
@@ -127,22 +127,22 @@ struct Vec3{
 };
 
 static Vec3 tUnitVec(Vec3* vec){
-	float mag = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
-	mag = sqrtf(mag);
+	double mag = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
+	mag = sqrt(mag);
 	Vec3 unit = *vec / mag;
 	return unit;
 }
 
-static float vecMagSqr(Vec3* vec){
+static double vecMagSqr(Vec3* vec){
 	return  vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
 }
 
-static float vecMag(Vec3* vec){
-	float magsqr = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
-	return sqrtf(magsqr);
+static double vecMag(Vec3* vec){
+	double magsqr = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
+	return sqrt(magsqr);
 }
 
-static float getDistance(const Vec3* p1, const Vec3* p2){
+static double getDistance(const Vec3* p1, const Vec3* p2){
 	Vec3 diff = *const_cast<Vec3*>(p1) - *const_cast<Vec3*>(p2);
 	return vecMag(&diff);
 }

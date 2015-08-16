@@ -3,7 +3,8 @@
 #define PHYSOBJ_TYPE  (1 << 2)
 #define HITBOX_TYPE   (1 << 3)
 #define SHIP_TYPE     (1 << 4)
-#define FORCEGEN_TYPE (1 << 6)
+#define FORCEGEN_TYPE (1 << 5)
+#define PLANET_TYPE   (1 << 6)
 class GameObjBase{
 public:
 	int getType(){

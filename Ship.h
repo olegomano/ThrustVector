@@ -6,14 +6,14 @@ class Ship : public PlaneDrawable, public PhysObjBase
 public:
 	Ship(){
 		type |= SHIP_TYPE;
-		radious = .4f;
+		hitBoxRad = .4f;
 	}
 	Ship(const wchar_t* regTxt,const wchar_t* normTxt, Vec3* pos){
 		rTxt = regTxt;
 		nTxt = normTxt;
 		PlaneDrawable::displace(pos->x,pos->y,pos->z);
 		type |= SHIP_TYPE;
-		radious = .4f;
+		hitBoxRad = .4f;
 	}
 	~Ship();
 	const virtual Vec3* getPosition();
@@ -31,15 +31,13 @@ public:
 
 	virtual void setScale(float x, float y, float z){
 		PlaneDrawable::setScale(x, y, z);
-		radious = x;
+		hitBoxRad = x;
 	}
 
 	virtual void mulScale(float x, float y, float z){
 		PlaneDrawable::mulScale(x, y, z);
-		radious *= x;
+		hitBoxRad *= x;
 	}
-
-	virtual void resolveCollisions(float dt);
 
 protected:
 	ShipTexture shipTxt;

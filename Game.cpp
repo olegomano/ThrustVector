@@ -2,7 +2,7 @@
 #define MILLISECONDS /1000
 #define WINKEY_X 88
 #define WINKEY_Z 90
-#define CAMERA_SPEED .0125
+#define CAMERA_SPEED .5125
 
 
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
@@ -86,13 +86,13 @@ void Game::onKeyPressed(WPARAM key){
 			camera.displace(0, CAMERA_SPEED, 0);
 			break;
 		case WINKEY_X:
-			if (camera.getOrigin()->m128_f32[2] <= 1){
+			if (camera.getOrigin()->z <= 1){
 				return;
 			}
-			camera.displace(0, 0, -.25f);
+			camera.displace(0, 0, -1.25f);
 			break;
 		case WINKEY_Z:
-			camera.displace(0, 0, .25f);
+			camera.displace(0, 0, 1.25f);
 			break;
 
 	}
@@ -102,7 +102,8 @@ auto lFrame = std::chrono::high_resolution_clock::now();
 void Game::onFrame(ID3D11DeviceContext*  context){
 	auto tFrame = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(tFrame - lFrame).count();
-	float dt = duration / 1000000000;
+	const double dt = duration / 1000000000;
+	
 	if (mouse.lClick && mouse.rClick){
 
 	}
@@ -115,16 +116,24 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	else if (mouse.rClick){
 
 	}
+
 	cbCamera camUpdate;
 	camera.fillOutCb(&camUpdate);
 	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
 	vector<PhysObjBase*>*  physList = currentScene.getPhysObjList();
 	vector<DrawableBase*>* drawList = currentScene.getDrawList();
 	vector<Ship*>*		   shipList = currentScene.getShipList();
-	
+	vector<ForceGenBase*>* fgenList = currentScene.getForceGenList();
+
+	for (unsigned int i = 0; i < fgenList->size(); i++){
+		for (unsigned int b = 0; b < physList->size(); b++){
+			(*fgenList)[i]->applyForce((*physList)[b]);
+		}
+	}
 	
 	for (unsigned int i = 0; i < physList->size(); i++){
 		(*physList)[i]->calculateVelocity(dt);
+		(*physList)[i]->resetFrame();
 	}
 
 	for (unsigned int i = 0; i < shipList->size(); i++){
@@ -132,16 +141,13 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	}
 
 	for (unsigned int i = 0; i < physList->size(); i++){
-		(*physList)[i]->saveFrameState();
 		for (unsigned int b = 0; b < physList->size(); b++){
 			if (b != i){
-				(*physList)[i]->checkCollision((*physList)[b]);
+				if ((*physList)[i]->checkCollision((*physList)[b])){
+					collisions.push( Collision((*physList)[b], (*physList)[i])  );
+				}
 			}
 		}
-	}
-	
-	for (unsigned int i = 0; i < physList->size(); i++){
-		(*physList)[i]->resolveCollisions(dt);
 	}
 
 	for (unsigned int i = 0; i < physList->size(); i++){
@@ -149,14 +155,22 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 		(*physList)[i]->resetFrame();
 	}
 
-	
+	while (!collisions.empty()){
+		collisions.top().resolveCollision(dt);
+		collisions.pop();
+	}
+
 
 	for (unsigned int i = 0; i < drawList->size(); i++){
 		(*drawList)[i]->draw(dt);
+
 	}
 
-	
-		
+	for (unsigned int i = 0; i < physList->size(); i++){
+		(*physList)[i]->clearCollisionList();
+		(*physList)[i]->resetFrame();
+	}
+
 }
 
 void Game::toWorld(const Point* c, Vec3* out){
@@ -164,15 +178,15 @@ void Game::toWorld(const Point* c, Vec3* out){
 	scConvert.x = ( (c->x / screenW) - .5f)*2;
 	scConvert.y = ( .5f - (c->y / screenH)) * 2;
 	
-	float camDist = ((Vec3*)camera.getOrigin())->z;
-	float focus = camera.getFocusDistance();
+	double camDist = ((Vec3*)camera.getOrigin())->z;
+	double focus = camera.getFocusDistance();
 
 	out->x = (scConvert.x / focus)*(focus + camDist);
 	out->y = (scConvert.y / focus)*(focus + camDist);
 	out->z = 0;
 
-	out->x -= camera.getOrigin()->m128_f32[0];
-	out->y -= camera.getOrigin()->m128_f32[1];
+	out->x -= camera.getOrigin()->x;
+	out->y -= camera.getOrigin()->y;
 
 }
 

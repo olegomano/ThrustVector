@@ -14,27 +14,25 @@ public:
 		Vec3 acceleration = force / mass;
 		velocity = velocity + acceleration*dt / 2.0f;
 	}
-	
+
 	virtual bool checkCollision(PhysObjBase* other){
 		if (this == other) return false;
-		collision nCollision(this, other);
-		if (hasCollision(&nCollision) >= 0) return true;
+		if (haveCollision(other) )return false;
 		Vec3 distance = *const_cast<Vec3*>(getPosition()) - *const_cast<Vec3*>(other->getPosition());
-		float distMag = distance.x*distance.x + distance.z*distance.z + distance.y*distance.y;
-		float radMag = (radious + other->radious)* (radious + other->radious);
+		double distMag = distance.x*distance.x + distance.z*distance.z + distance.y*distance.y;
+		double radMag = (hitBoxRad + other->hitBoxRad)* (hitBoxRad + other->hitBoxRad);
 		if (distMag < radMag){
-			collisionList.push_back(nCollision);
-			other->collisionList.push_back(nCollision);		
+			collisionList.push_back(other);
+			other->collisionList.push_back(this);		
 			return true;
 		}
 		return false;
 	};
 
-	virtual void resolveCollisions(float dt){};
+	virtual void onCollisionResolved(PhysObjBase* collidedWith){}
 
-	virtual void move(float dt){
-		
-	};
+	
+	virtual void move(float dt){};
 
 	void resetFrame(){
 		force.x = 0;
@@ -42,7 +40,7 @@ public:
 		force.z = 0;
 	}
 
-	void setVelocity(Vec3 v){
+	virtual void setVelocity(Vec3 v){
 		velocity = v;
 	}
 
@@ -58,83 +56,41 @@ public:
 		return force;
 	}
 
-	void saveFrameState(){
-		startFramePos = *getPosition();
-		startFrameVel = velocity;
-	}
-
-	Vec3* getFramePos(){
-		return &startFramePos;
-	}
-
-	Vec3* getFrameVel(){
-		return &startFrameVel;
-	}
-
-	void removeFromCollisionList(){
-		collisionList.pop_back();
-	}
-
 	void clearCollisionList(){
 		collisionList.clear();
 	}
 
-	float getMass(){
+	double getMass(){
 		return mass;
 	}
 
-	float getRadious(){
-		return radious;
+	double getHitboxRad(){
+		return hitBoxRad;
 	}
-
-	
-
 	const virtual Vec3* getPosition() = 0;
 
-
-	struct collision{
-		PhysObjBase* obj1;
-		PhysObjBase* obj2;
-		bool resolved = false;
-
-		collision(PhysObjBase* o1, PhysObjBase* o2){
-			obj1 = o1;
-			obj2 = o2;
-		};
-
-		bool operator==(collision c){
-			if (c.obj1 == obj1 && c.obj2 == obj2){
+private:
+	bool haveCollision(PhysObjBase* other){
+		for (unsigned int i = 0; i < collisionList.size(); i++){
+			if (other == collisionList[i]){
 				return true;
 			}
-
-			if (c.obj1 == obj2 && c.obj2 == obj1){
-				return true;
-			}
-			return false;
-		};
-
-	};
-
-	void setCollisionResolved(collision* col){
-		collisionList[hasCollision(col)].resolved = true;
+		}
+		return false;
 	}
+
+	double hitboxTolerance = .9995;
+
 
 protected:
 	Vec3 force;
 	Vec3 velocity;
 	Vec3 startFrameVel;
 	Vec3 startFramePos;
-	std::vector<collision> collisionList;
-	float mass = 1;
-	float radious = 1;
+	double mass = 1;
+	double hitBoxRad = 1;
+	std::vector<PhysObjBase*> collisionList;
 
-	int hasCollision(collision* other){
-		for (int i = 0; i < collisionList.size(); i++){
-			if (collisionList[i] == *other){
-				return i;
-			}
-		}
-		return -1;
-	}
+	
 
 };

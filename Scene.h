@@ -7,6 +7,7 @@
 #include "Ship.h"
 #include "DrawableBase.h"
 #include "PhysObjBase.h"
+#include "Planet.h"
 class Scene
 {
 public:
@@ -16,7 +17,10 @@ public:
 	std::vector<DrawableBase*>* getDrawList(){ return &drawableList; };
 	std::vector<PhysObjBase*>*  getPhysObjList(){ return &physObjList; };
 	std::vector<Ship*>*			getShipList(){ return &shipList; };
+	std::vector<Planet*>*		getPlanetList(){ return &planetList; };
+	std::vector<ForceGenBase*>*	getForceGenList(){ return &forceGeneratorList; };
 	void					    registerObject(Ship* s);
+	void						registerObject(Planet* p);
 	void						registerObject(PhysObjBase* p);
 	~Scene();
 protected:
@@ -25,5 +29,7 @@ protected:
 	std::vector<DrawableBase*> drawableList;
 	std::vector<PhysObjBase*>  physObjList;
 	std::vector<Ship*>	       shipList;
+	std::vector<Planet*>       planetList;
+	std::vector<ForceGenBase*> forceGeneratorList;
 };
 

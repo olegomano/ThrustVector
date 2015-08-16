@@ -22,16 +22,16 @@ public:
 		mMatrix.r[3].m128_f32[2] = z;
 	}
 
-	void rotate(float angle){
+	void rotate(double angle){
 		mMatrix *= DirectX::XMMatrixRotationZ(angle);
 
 	}
 
-	void rotateCenter(float angle){
-		rotate(angle, ((Vec3*)getOrigin()));
+	void rotateCenter(double angle){
+		rotate(angle,  getOrigin() );
 	}
 
-	void rotate(float angle, Vec3* p){
+	void rotate(double angle, const Vec3* p){
 		Vec3 point = *p;
 		displace(-point.x, -point.y, -point.z);
 		rotate(angle);
@@ -39,7 +39,12 @@ public:
 	};
 
 	void setNormal(Vec3* newNormal){
-		
+		DirectX::XMVECTOR nNorm;
+		nNorm.m128_f32[0] = newNormal->x;
+		nNorm.m128_f32[1] = newNormal->y;
+		nNorm.m128_f32[2] = newNormal->z;
+
+		//DirectX::XMVECTOR nRight = nNorm * mMatrix.r[2];
 	}
 
 	void mulScale(float x, float y, float z){
@@ -57,12 +62,16 @@ public:
 		return scale;
 	}
 
-	const DirectX::XMVECTOR* getOrigin(){
-		return &mMatrix.r[3];
+	Vec3* getOrigin(){
+		origin.x = mMatrix.r[3].m128_f32[0];
+		origin.y = mMatrix.r[3].m128_f32[1];
+		origin.z = mMatrix.r[3].m128_f32[2];
+		return &origin;
 	}
 protected:
 	DirectX::XMMATRIX mMatrix;
 	float scale[4];
 private:
+	Vec3 origin;
 
 };

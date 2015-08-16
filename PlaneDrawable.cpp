@@ -65,7 +65,7 @@ void PlaneDrawable::draw(float dt){
 		updateData.scale[i] = scale[i];
 	}
 	
-ID3D11BlendState* d3dBlendState;
+	ID3D11BlendState* d3dBlendState;
 	D3D11_BLEND_DESC omDesc;
 	ZeroMemory(&omDesc,	sizeof(D3D11_BLEND_DESC));
 	omDesc.RenderTarget[0].BlendEnable = true;

@@ -52,7 +52,7 @@ ID3D11InputLayout*      g_pVertexLayout = nullptr;
 ID3D11Buffer*           g_pVertexBuffer = nullptr;
 Game					g_gameInstance;
 int					    scW = 1024;
-int						scH = 720;
+int						scH = 1024;
 //--------------------------------------------------------------------------------------
 // Forward declarations
 //--------------------------------------------------------------------------------------

@@ -8,7 +8,9 @@
 #include "TextureManager.h"
 #include <vector>
 #include "Scene.h"
+#include "Collision.h"
 #include <chrono>
+#include <stack>
 
 class Game
 {
@@ -31,5 +33,6 @@ private:
 	TextureManager textureManager;
 	Scene		   currentScene;
 	void		   toWorld(const Point* c, Vec3* out);
+	std::stack<Collision> collisions;
 };
 
