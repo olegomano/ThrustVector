@@ -12,15 +12,19 @@ public:
 	}
 	void calculateVelocity(float dt){
 		Vec3 acceleration = force / mass;
-		velocity = velocity + acceleration*dt / 2.0f;
+		velocity = velocity + acceleration*dt;
 	}
 
 	virtual bool checkCollision(PhysObjBase* other){
 		if (this == other) return false;
 		if (haveCollision(other) )return false;
 		Vec3 distance = *const_cast<Vec3*>(getPosition()) - *const_cast<Vec3*>(other->getPosition());
-		double distMag = distance.x*distance.x + distance.z*distance.z + distance.y*distance.y;
-		double radMag = (hitBoxRad + other->hitBoxRad)* (hitBoxRad + other->hitBoxRad);
+		float distMag = distance.x*distance.x + distance.z*distance.z + distance.y*distance.y;
+		float radMag = (hitBoxRad + other->hitBoxRad)* (hitBoxRad + other->hitBoxRad);
+
+		int realDist = distMag * 1000;
+		int realRadMag = radMag * 1000;
+
 		if (distMag < radMag){
 			collisionList.push_back(other);
 			other->collisionList.push_back(this);		
@@ -34,7 +38,7 @@ public:
 	
 	virtual void move(float dt){};
 
-	void resetFrame(){
+	virtual void resetFrame(){
 		force.x = 0;
 		force.y = 0;
 		force.z = 0;
@@ -68,7 +72,10 @@ public:
 		return hitBoxRad;
 	}
 	const virtual Vec3* getPosition() = 0;
-
+	
+	double getElasticity(){
+		return elasticity;
+	}
 private:
 	bool haveCollision(PhysObjBase* other){
 		for (unsigned int i = 0; i < collisionList.size(); i++){
@@ -79,16 +86,16 @@ private:
 		return false;
 	}
 
-	double hitboxTolerance = .9995;
-
+	
 
 protected:
 	Vec3 force;
 	Vec3 velocity;
 	Vec3 startFrameVel;
 	Vec3 startFramePos;
-	double mass = 1;
+	double mass = 10;
 	double hitBoxRad = 1;
+	double elasticity = .01;
 	std::vector<PhysObjBase*> collisionList;
 
 	

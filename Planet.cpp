@@ -6,7 +6,7 @@ void Planet::applyForce(PhysObjBase* target){
 	if (target->getType() == getType()) return;
 
 	float distance = getDistance(getPosition(), target->getPosition());
-	if (distance < (getHitboxRad() + target->getHitboxRad())*.95){
+	if (distance < (getHitboxRad() + target->getHitboxRad())*1.01){
 		Vec3 nVel;
 		target->setVelocity(nVel);
 		return;

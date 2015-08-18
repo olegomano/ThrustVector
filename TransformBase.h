@@ -9,14 +9,20 @@ public:
 		}
 	}
 
-	void displace(float x, float y, float z){
+	void displace(double x, double y, double z){
+		origin.x += x;
+		origin.y += y;
+		origin.z += z;
 		mMatrix.r[3].m128_f32[0] += x;
 		mMatrix.r[3].m128_f32[1] += y;
 		mMatrix.r[3].m128_f32[2] += z;
 
 	}
 
-	void setPosition(float x, float y, float z){
+	void setPosition(double x, double y, double z){
+		origin.x = x;
+		origin.y = y;
+		origin.z = z;
 		mMatrix.r[3].m128_f32[0] = x;
 		mMatrix.r[3].m128_f32[1] = y;
 		mMatrix.r[3].m128_f32[2] = z;
@@ -63,9 +69,9 @@ public:
 	}
 
 	Vec3* getOrigin(){
-		origin.x = mMatrix.r[3].m128_f32[0];
-		origin.y = mMatrix.r[3].m128_f32[1];
-		origin.z = mMatrix.r[3].m128_f32[2];
+	//	origin.x = mMatrix.r[3].m128_f32[0];
+	//	origin.y = mMatrix.r[3].m128_f32[1];
+	//	origin.z = mMatrix.r[3].m128_f32[2];
 		return &origin;
 	}
 protected:

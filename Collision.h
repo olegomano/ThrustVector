@@ -1,6 +1,7 @@
 #pragma once
 #include "PhysObjBase.h"
 #include "Structs.h"
+#include <stdlib.h>
 class Collision
 {
 public:
@@ -17,6 +18,8 @@ public:
 	~Collision(){};
 private:
 	double getCollisionTime(PhysObjBase* me, PhysObjBase* other);
+	void ballModel(double dtCol);
+	void energyLossModel(double dtCol);
 protected:
 	PhysObjBase* o1;
 	PhysObjBase* o2;

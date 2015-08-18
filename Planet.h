@@ -7,12 +7,14 @@ public:
 	Planet(){
 		type |= PLANET_TYPE;
 		hitBoxRad = .5f;
+		mass = 11E11;
 	};
 
 	Planet(Vec3* pos){
 		type |= PLANET_TYPE;
 		hitBoxRad = .5f;
 		setPosition(pos->x, pos->y, pos->z);
+		mass = 11E10;
 	}
 	virtual Vec3* getPosition(){
 		return const_cast<Vec3*>(PlaneDrawable::getOrigin() );
@@ -33,17 +35,12 @@ public:
 
 	virtual bool checkCollision(PhysObjBase* other){
 		bool res =  PhysObjBase::checkCollision(other);
-		if (res){
-			int b = 5;
-			int a = 10;
-			int c = a + b;
-		}
 		return res;
 	}
 
 	virtual void applyForce(PhysObjBase* target);
 	~Planet();
 protected:
-	float mass = 500000;
+	
 };
 

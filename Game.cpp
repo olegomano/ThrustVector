@@ -1,9 +1,12 @@
 #include "Game.h"
 #define MILLISECONDS /1000
+#define NANOSECONDS /1000000000
+#define NANO_TO_MILLIS /1000000
+#define FRAMETIME 16670000
 #define WINKEY_X 88
 #define WINKEY_Z 90
 #define CAMERA_SPEED .5125
-
+#define PHYS_TIME_STEPS 8
 
 extern HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 using namespace std;
@@ -98,19 +101,23 @@ void Game::onKeyPressed(WPARAM key){
 	}
 }
 auto lFrame = std::chrono::high_resolution_clock::now();
-
+bool first = true;
 void Game::onFrame(ID3D11DeviceContext*  context){
 	auto tFrame = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(tFrame - lFrame).count();
-	const double dt = duration / 1000000000;
-	
+	const double dt = (double)duration NANOSECONDS;
+	lFrame = tFrame;
+	if (duration > FRAMETIME && !first){
+		int lag = 1;
+	}
+	first = false;
 	if (mouse.lClick && mouse.rClick){
 
 	}
 	else if (mouse.lClick){
 		Vec3 mouseInWorld;
 		toWorld(&mouse.pos, &mouseInWorld);
-		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition()) / 50000000;
+		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition()) * 1000000.0*PHYS_TIME_STEPS;
 		currentScene.getPlayerShip()->applyForce(&force);
 	}
 	else if (mouse.rClick){
@@ -125,41 +132,43 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	vector<Ship*>*		   shipList = currentScene.getShipList();
 	vector<ForceGenBase*>* fgenList = currentScene.getForceGenList();
 
-	for (unsigned int i = 0; i < fgenList->size(); i++){
-		for (unsigned int b = 0; b < physList->size(); b++){
-			(*fgenList)[i]->applyForce((*physList)[b]);
+	for (int i = 0; i < PHYS_TIME_STEPS; i++){
+
+		for (unsigned int i = 0; i < fgenList->size(); i++){
+			for (unsigned int b = 0; b < physList->size(); b++){
+				(*fgenList)[i]->applyForce((*physList)[b]);
+			}
 		}
-	}
-	
-	for (unsigned int i = 0; i < physList->size(); i++){
-		(*physList)[i]->calculateVelocity(dt);
-		(*physList)[i]->resetFrame();
-	}
 
-	for (unsigned int i = 0; i < shipList->size(); i++){
-		(*shipList)[i]->move(dt);
-	}
+		for (unsigned int i = 0; i < physList->size(); i++){
+			(*physList)[i]->calculateVelocity(dt / PHYS_TIME_STEPS);
+			(*physList)[i]->resetFrame();
+		}
 
-	for (unsigned int i = 0; i < physList->size(); i++){
-		for (unsigned int b = 0; b < physList->size(); b++){
-			if (b != i){
-				if ((*physList)[i]->checkCollision((*physList)[b])){
-					collisions.push( Collision((*physList)[b], (*physList)[i])  );
+		for (unsigned int i = 0; i < shipList->size(); i++){
+			(*shipList)[i]->move(dt/PHYS_TIME_STEPS);
+		}
+
+		for (unsigned int i = 0; i < physList->size(); i++){
+			for (unsigned int b = 0; b < physList->size(); b++){
+				if (b != i){
+					if ((*physList)[i]->checkCollision((*physList)[b])){
+						collisions.push(Collision((*physList)[b], (*physList)[i]));
+					}
 				}
 			}
 		}
-	}
 
-	for (unsigned int i = 0; i < physList->size(); i++){
-		(*physList)[i]->clearCollisionList();
-		(*physList)[i]->resetFrame();
-	}
+		for (unsigned int i = 0; i < physList->size(); i++){
+			(*physList)[i]->clearCollisionList();
+			(*physList)[i]->resetFrame();
+		}
 
-	while (!collisions.empty()){
-		collisions.top().resolveCollision(dt);
-		collisions.pop();
+		while (!collisions.empty()){
+			collisions.top().resolveCollision(dt / PHYS_TIME_STEPS);
+			collisions.pop();
+		}
 	}
-
 
 	for (unsigned int i = 0; i < drawList->size(); i++){
 		(*drawList)[i]->draw(dt);
@@ -170,6 +179,9 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 		(*physList)[i]->clearCollisionList();
 		(*physList)[i]->resetFrame();
 	}
+	float sleepDuration = (FRAMETIME - duration)NANOSECONDS;
+	Sleep(sleepDuration);
+	
 
 }
 

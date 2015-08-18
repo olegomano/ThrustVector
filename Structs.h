@@ -126,6 +126,15 @@ struct Vec3{
 	}
 };
 
+static Vec3 crossProduct(Vec3* v1, Vec3* v2){
+	return Vec3();
+}
+
+static double dotProduct(Vec3* v1 ,Vec3* v2){
+	double dotProduct = v1->x*v2->x + v1->y*v2->y + v1->z*v2->z;
+	return dotProduct;
+}
+
 static Vec3 tUnitVec(Vec3* vec){
 	double mag = vec->x*vec->x + vec->y*vec->y + vec->z*vec->z;
 	mag = sqrt(mag);

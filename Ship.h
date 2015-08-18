@@ -7,6 +7,7 @@ public:
 	Ship(){
 		type |= SHIP_TYPE;
 		hitBoxRad = .4f;
+		mass = 1000000;
 	}
 	Ship(const wchar_t* regTxt,const wchar_t* normTxt, Vec3* pos){
 		rTxt = regTxt;
@@ -14,6 +15,7 @@ public:
 		PlaneDrawable::displace(pos->x,pos->y,pos->z);
 		type |= SHIP_TYPE;
 		hitBoxRad = .4f;
+		mass = 1000000;
 	}
 	~Ship();
 	const virtual Vec3* getPosition();
@@ -24,7 +26,7 @@ public:
 		shipTxt = *texture;
 	}
 
-	void move(float dt){
+	virtual void move(float dt){
 		Vec3 nPos = *const_cast<Vec3*>(getPosition()) +  getVelocity() * dt;
 		setPosition(nPos.x, nPos.y, nPos.z);
 	}
