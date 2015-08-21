@@ -3,7 +3,17 @@
 
 
 void Ship::draw(float dt){
-	setNormal(&tUnitVec(&getVelocity()));
+	
+	rotateCenter(angularVelocity*dt);
+	angularVelocity *= .995;
+	if (angularVelocity < .0001 && angularVelocity > -.0001){
+		angularVelocity = 0;
+	}
+	if (vecMag(&getVelocity()) > 0 && angularVelocity < 3 ){
+		Vec3* currForward = getForward();
+		Vec3  newForward = *currForward + (getVelocity() - *currForward)*.005;
+		setNormal(&tUnitVec(&newForward));
+	}
 	cbModelData updateData;
 	updateData.modelMat = mMatrix;
 	for (int i = 0; i < 4; i++){

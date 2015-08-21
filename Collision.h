@@ -19,7 +19,7 @@ public:
 private:
 	double getCollisionTime(PhysObjBase* me, PhysObjBase* other);
 	void ballModel(double dtCol);
-	void energyLossModel(double dtCol);
+	void energyLossModel(double dtCol, double dt);
 protected:
 	PhysObjBase* o1;
 	PhysObjBase* o2;

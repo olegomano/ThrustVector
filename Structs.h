@@ -10,7 +10,7 @@
 #include <time.h>
 
 
-
+#define PI_DOUBLE 3.14159265358979323846
 #define FRAME_TIME .0016
 
 struct Shader{
@@ -126,8 +126,13 @@ struct Vec3{
 	}
 };
 
+
 static Vec3 crossProduct(Vec3* v1, Vec3* v2){
-	return Vec3();
+	Vec3 cross;
+	cross.x = (v1->y * v2->z) - (v1->z * v2->y);
+	cross.y = (v1->z * v2->x) - (v1->x * v2->z);
+	cross.z = (v1->y * v2->y) - (v1->y * v2->x);
+	return cross;
 }
 
 static double dotProduct(Vec3* v1 ,Vec3* v2){

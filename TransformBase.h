@@ -46,11 +46,15 @@ public:
 
 	void setNormal(Vec3* newNormal){
 		DirectX::XMVECTOR nNorm;
-		nNorm.m128_f32[0] = newNormal->x;
-		nNorm.m128_f32[1] = newNormal->y;
-		nNorm.m128_f32[2] = newNormal->z;
+		Vec3 up(0,0,1);
+		Vec3 nRight = crossProduct(newNormal, &up);
+		mMatrix.r[1].m128_f32[0] = newNormal->x;
+		mMatrix.r[1].m128_f32[1] = newNormal->y;
+		mMatrix.r[1].m128_f32[2] = newNormal->z;
 
-		//DirectX::XMVECTOR nRight = nNorm * mMatrix.r[2];
+		mMatrix.r[0].m128_f32[0] = nRight.x;
+		mMatrix.r[0].m128_f32[1] = nRight.y;
+		mMatrix.r[0].m128_f32[2] = nRight.z;
 	}
 
 	void mulScale(float x, float y, float z){

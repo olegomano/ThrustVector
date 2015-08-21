@@ -6,20 +6,24 @@ class Ship : public PlaneDrawable, public PhysObjBase
 public:
 	Ship(){
 		type |= SHIP_TYPE;
-		hitBoxRad = .4f;
+		hitBoxRad = .55f;
 		mass = 1000000;
+		momentInertia = mass*hitBoxRad*hitBoxRad;
 	}
-	Ship(const wchar_t* regTxt,const wchar_t* normTxt, Vec3* pos){
+
+	Ship(const wchar_t* regTxt, const wchar_t* normTxt, Vec3* pos){
 		rTxt = regTxt;
 		nTxt = normTxt;
-		PlaneDrawable::displace(pos->x,pos->y,pos->z);
+		PlaneDrawable::displace(pos->x, pos->y, pos->z);
 		type |= SHIP_TYPE;
-		hitBoxRad = .4f;
+		hitBoxRad = .55f;
 		mass = 1000000;
+		momentInertia = mass*hitBoxRad*hitBoxRad;
 	}
+
 	~Ship();
 	const virtual Vec3* getPosition();
-	
+
 	virtual void draw(float dt);
 	bool checkCollision(PhysObjBase* other);
 	void setShipTexture(ShipTexture* texture){
@@ -27,7 +31,7 @@ public:
 	}
 
 	virtual void move(float dt){
-		Vec3 nPos = *const_cast<Vec3*>(getPosition()) +  getVelocity() * dt;
+		Vec3 nPos = *const_cast<Vec3*>(getPosition()) + getVelocity() * dt;
 		setPosition(nPos.x, nPos.y, nPos.z);
 	}
 
@@ -41,7 +45,15 @@ public:
 		hitBoxRad *= x;
 	}
 
+	virtual Vec3* getForward(){
+		forward.x = mMatrix.r[1].m128_f32[0];
+		forward.y = mMatrix.r[1].m128_f32[1];
+		forward.z = mMatrix.r[1].m128_f32[2];
+		return &forward;
+	}
+
 protected:
+	Vec3 forward;
 	ShipTexture shipTxt;
 	std::wstring rTxt;
 	std::wstring nTxt;

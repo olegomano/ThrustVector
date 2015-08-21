@@ -41,7 +41,7 @@ void Scene::createScene(TextureManager* texture, ID3D11Device* pd3dDevice, ID3D1
 		ships[i].mulScale(6, 6, 1);
 		registerObject(&ships[i]);
 	}
-	ships[shipAmount - 1].setTexture(texture->getTexture(&playerShip));
+	getPlayerShip()->setTexture(texture->getTexture(&playerShip));
 
 	Planet* p = new Planet(&Vec3(100,0,0));
 	p->create(pd3dDevice, context, shader);
@@ -54,7 +54,13 @@ void Scene::createScene(TextureManager* texture, ID3D11Device* pd3dDevice, ID3D1
 	p2->create(pd3dDevice, context, shader);
 	p2->setTexture(texture->getTexture(&planetTexture));
 	p2->mulScale(35, 35, 1);
-	//registerObject(p2);
+	registerObject(p2);
+
+	Planet* p3 = new Planet(&Vec3(0, 100, 0));
+	p3->create(pd3dDevice, context, shader);
+	p3->setTexture(texture->getTexture(&planetTexture));
+	p3->mulScale(15, 15, 1);
+	//registerObject(p3);
 	
 }
 

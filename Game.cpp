@@ -2,7 +2,7 @@
 #define MILLISECONDS /1000
 #define NANOSECONDS /1000000000
 #define NANO_TO_MILLIS /1000000
-#define FRAMETIME 16670000
+#define FRAMETIME 3.222e7
 #define WINKEY_X 88
 #define WINKEY_Z 90
 #define CAMERA_SPEED .5125
@@ -179,8 +179,10 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 		(*physList)[i]->clearCollisionList();
 		(*physList)[i]->resetFrame();
 	}
-	float sleepDuration = (FRAMETIME - duration)NANOSECONDS;
-	Sleep(sleepDuration);
+	float sleepDuration = (FRAMETIME - duration)NANO_TO_MILLIS;
+	if (sleepDuration > 0){
+		Sleep(sleepDuration);
+	}
 	
 
 }

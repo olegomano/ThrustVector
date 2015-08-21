@@ -7,14 +7,14 @@ public:
 	Planet(){
 		type |= PLANET_TYPE;
 		hitBoxRad = .5f;
-		mass = 11E11;
+		mass = 51E10;
 	};
 
 	Planet(Vec3* pos){
 		type |= PLANET_TYPE;
 		hitBoxRad = .5f;
 		setPosition(pos->x, pos->y, pos->z);
-		mass = 11E10;
+		mass = 51E10;
 	}
 	virtual Vec3* getPosition(){
 		return const_cast<Vec3*>(PlaneDrawable::getOrigin() );
@@ -24,7 +24,7 @@ public:
 		PlaneDrawable::setScale(x, y, z);
 		hitBoxRad = y;
 	}
-
+	
 	virtual void mulScale(float x, float y, float z){
 		PlaneDrawable::mulScale(x, y, z);
 		hitBoxRad *= y;
