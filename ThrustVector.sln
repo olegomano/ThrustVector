@@ -7,6 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThrustVector", "Tutorial03.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C752F6E-3C3A-406C-A342-36F56F76E7C0}"
 	ProjectSection(SolutionItems) = preProject
+		NormalMapShader.fx = NormalMapShader.fx
 		Tutorial03.fx = Tutorial03.fx
 	EndProjectSection
 EndProject

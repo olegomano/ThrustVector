@@ -29,11 +29,13 @@ void compileShader(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shad
 HRESULT Game::init(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, int w, int h){
 	screenH = h;
 	screenW = w;
-	textureManager.createManager(pd3dDevice);
+	textureManager.createManager(pd3dDevice,context);
 	compileShader(pd3dDevice,context,&shader);
 	initObjects(pd3dDevice,context,&shader);
 	currentScene.createScene(&textureManager, pd3dDevice, context, &shader);
+	camera.setFollowObj(currentScene.getPlayerShip());
 	return S_OK;
+
 }
 
 
@@ -77,35 +79,47 @@ void initObjects(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader
 void Game::onKeyPressed(WPARAM key){
 	switch (key){
 		case VK_LEFT:
-			camera.displace(CAMERA_SPEED, 0, 0);
-			break;
-		case VK_RIGHT:
 			camera.displace(-CAMERA_SPEED, 0, 0);
 			break;
-		case VK_UP:
-			camera.displace(0, -CAMERA_SPEED, 0);
+		case VK_RIGHT:
+			camera.displace(CAMERA_SPEED, 0, 0);
 			break;
-		case VK_DOWN:
+		case VK_UP:
 			camera.displace(0, CAMERA_SPEED, 0);
 			break;
+		case VK_DOWN:
+			camera.displace(0, -CAMERA_SPEED, 0);
+			break;
 		case WINKEY_X:
-			if (camera.getOrigin()->z <= 1){
+			if (camera.getOrigin()->z >= -.05){
 				return;
 			}
-			camera.displace(0, 0, -1.25f);
+			camera.displace(0, 0, 1.25f);
 			break;
 		case WINKEY_Z:
-			camera.displace(0, 0, 1.25f);
+			camera.displace(0, 0, -1.25f);
 			break;
 
 	}
 }
 auto lFrame = std::chrono::high_resolution_clock::now();
 bool first = true;
+
+double fpsTime = 0;
+int frameCount = 0;
+
 void Game::onFrame(ID3D11DeviceContext*  context){
 	auto tFrame = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(tFrame - lFrame).count();
 	const double dt = (double)duration NANOSECONDS;
+	fpsTime += dt;
+	frameCount++;
+	if (fpsTime > 1){
+		TM_PRINTF("Fps: %d \n",frameCount);
+		frameCount = 0;
+		fpsTime = 0;
+	}
+
 	lFrame = tFrame;
 	if (duration > FRAMETIME && !first){
 		int lag = 1;
@@ -117,16 +131,15 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 	else if (mouse.lClick){
 		Vec3 mouseInWorld;
 		toWorld(&mouse.pos, &mouseInWorld);
-		Vec3 force = (mouseInWorld - *currentScene.getPlayerShip()->getPosition()) * 1000000.0*PHYS_TIME_STEPS;
+		Vec3 force = (*const_cast<Vec3*>(currentScene.getPlayerShip()->getPosition()) - mouseInWorld) * 3000000.0*PHYS_TIME_STEPS;
+		force.x *= -1;
 		currentScene.getPlayerShip()->applyForce(&force);
 	}
 	else if (mouse.rClick){
 
 	}
 
-	cbCamera camUpdate;
-	camera.fillOutCb(&camUpdate);
-	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
+	
 	vector<PhysObjBase*>*  physList = currentScene.getPhysObjList();
 	vector<DrawableBase*>* drawList = currentScene.getDrawList();
 	vector<Ship*>*		   shipList = currentScene.getShipList();
@@ -170,15 +183,19 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 		}
 	}
 
+	camera.updateCameraPosition(dt);
+	cbCamera camUpdate;
+	camera.fillOutCb(&camUpdate);
+	context->UpdateSubresource(shader.pCbCameraBuffer, 0, nullptr, &camUpdate, 0, 0);
+
 	for (unsigned int i = 0; i < drawList->size(); i++){
 		(*drawList)[i]->draw(dt);
-
 	}
-
 	for (unsigned int i = 0; i < physList->size(); i++){
 		(*physList)[i]->clearCollisionList();
 		(*physList)[i]->resetFrame();
 	}
+	
 	float sleepDuration = (FRAMETIME - duration)NANO_TO_MILLIS;
 	if (sleepDuration > 0){
 		Sleep(sleepDuration);
@@ -189,19 +206,23 @@ void Game::onFrame(ID3D11DeviceContext*  context){
 
 void Game::toWorld(const Point* c, Vec3* out){
 	Point scConvert;
-	scConvert.x = ( (c->x / screenW) - .5f)*2;
-	scConvert.y = ( .5f - (c->y / screenH)) * 2;
+	scConvert.x = ( (c->x / screenW)*2) - 1;
+	scConvert.y = ( (c->y / screenH)*2) - 1;
 	
-	double camDist = ((Vec3*)camera.getOrigin())->z;
+	double camDist = -camera.getOrigin()->z;
 	double focus = camera.getFocusDistance();
-
-	out->x = (scConvert.x / focus)*(focus + camDist);
-	out->y = (scConvert.y / focus)*(focus + camDist);
+	TM_PRINTF("focus/camdist %f %f \n", focus,camDist);
+	TM_PRINTF("In Screen Space: %f, %f\n", scConvert.x, scConvert.y);
+	TM_PRINTF("Camera Position: %f %f %f \n", camera.getOrigin()->x, camera.getOrigin()->y, camera.getOrigin()->z);
+	out->x = ((scConvert.x)*(focus + camDist))/focus;
+	out->y = ((scConvert.y)*(focus + camDist))/focus;
 	out->z = 0;
 
-	out->x -= camera.getOrigin()->x;
-	out->y -= camera.getOrigin()->y;
-
+	out->x += camera.getOrigin()->x;
+	out->y += camera.getOrigin()->y;
+	TM_PRINTF("Converted Screen To World: %f, %f, %f %f \n", c->x,c->y,out->x,out->y);
+	double distanceTCam = getDistance(out, camera.getOrigin());
+	TM_PRINTF("Distnace from click to camera: %f \n", distanceTCam);
 }
 
 

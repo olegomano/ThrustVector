@@ -6,7 +6,7 @@ class Ship : public PlaneDrawable, public PhysObjBase
 public:
 	Ship(){
 		type |= SHIP_TYPE;
-		hitBoxRad = .55f;
+		hitBoxRad = .40f;
 		mass = 1000000;
 		momentInertia = mass*hitBoxRad*hitBoxRad;
 	}
@@ -16,7 +16,7 @@ public:
 		nTxt = normTxt;
 		PlaneDrawable::displace(pos->x, pos->y, pos->z);
 		type |= SHIP_TYPE;
-		hitBoxRad = .55f;
+		hitBoxRad = .40f;
 		mass = 1000000;
 		momentInertia = mass*hitBoxRad*hitBoxRad;
 	}
@@ -46,9 +46,9 @@ public:
 	}
 
 	virtual Vec3* getForward(){
-		forward.x = mMatrix.r[1].m128_f32[0];
-		forward.y = mMatrix.r[1].m128_f32[1];
-		forward.z = mMatrix.r[1].m128_f32[2];
+		forward.x = mMatrix._21;
+		forward.y = mMatrix._22;
+		forward.z = mMatrix._23;
 		return &forward;
 	}
 

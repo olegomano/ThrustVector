@@ -12,13 +12,19 @@
 
 #define PI_DOUBLE 3.14159265358979323846
 #define FRAME_TIME .0016
-
+#define TM_PRINTF(f_, ...) printf((f_), __VA_ARGS__)
 struct Shader{
 	ID3D11VertexShader*     pVertexShader = nullptr;
 	ID3D11PixelShader*      pPixelShader = nullptr;
 	ID3D11Buffer*			pCbModelMatBuffer = nullptr;
 	ID3D11Buffer*			pCbCameraBuffer = nullptr;
 	ID3D11InputLayout*      pVertexLayout = nullptr;
+};
+
+struct nMapShader{
+	ID3D11VertexShader*     pVertexShader = nullptr;
+	ID3D11PixelShader*      pPixelShader = nullptr;
+	ID3D11InputLayout*      pInputLayout = nullptr;
 };
 
 
@@ -126,6 +132,10 @@ struct Vec3{
 	}
 };
 
+
+static void mPrintf(const char* fmt...){
+	std::printf(fmt);
+}
 
 static Vec3 crossProduct(Vec3* v1, Vec3* v2){
 	Vec3 cross;

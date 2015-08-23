@@ -1,35 +1,20 @@
-﻿Build started 8/20/2015 10:37:08 PM.
+﻿Build started 8/21/2015 9:37:34 PM.
      1>Project "D:\VisualStudioProjects\ThrustVector\Tutorial03.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Collision.cpp Game.cpp Main.cpp PlaneDrawable.cpp Planet.cpp Scene.cpp Ship.cpp TextureManager.cpp WICTextureLoader\WICTextureLoader.cpp
-         Camera.cpp
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(18): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Collision.cpp Game.cpp Main.cpp PlaneDrawable.cpp Planet.cpp Scene.cpp Ship.cpp TextureManager.cpp
          Collision.cpp
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>Collision.cpp(29): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>Collision.cpp(30): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>Collision.cpp(84): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>Collision.cpp(85): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Collision.cpp(150): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Collision.cpp(151): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Collision.cpp(152): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>Collision.cpp(153): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>Collision.cpp(154): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>Collision.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>Collision.cpp(156): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
          Game.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -37,23 +22,23 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Game.cpp(144): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
-     1>Game.cpp(149): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
-     1>Game.cpp(174): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
-     1>Game.cpp(182): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>Game.cpp(184): warning C4244: 'argument' : conversion from 'float' to 'DWORD', possible loss of data
+     1>Game.cpp(156): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
+     1>Game.cpp(161): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
+     1>Game.cpp(186): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
+     1>Game.cpp(194): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>Game.cpp(196): warning C4244: 'argument' : conversion from 'float' to 'DWORD', possible loss of data
          Main.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -61,22 +46,24 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Main.cpp(155): error C2440: '=' : cannot convert from 'const wchar_t [20]' to 'LPCSTR'
-                 Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-     1>Main.cpp(167): error C2664: 'HWND CreateWindowExA(DWORD,LPCSTR,LPCSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)' : cannot convert argument 2 from 'const wchar_t [20]' to 'LPCSTR'
-                 Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+     1>Main.cpp(88): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(226) : see declaration of 'freopen'
+     1>Main.cpp(89): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(226) : see declaration of 'freopen'
+     1>Main.cpp(90): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdio.h(226) : see declaration of 'freopen'
          PlaneDrawable.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -84,14 +71,14 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
          Planet.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -99,18 +86,18 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>Planet.cpp(8): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
          Scene.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -119,24 +106,20 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Scene.cpp(13): warning C4316: 'Ship' : object allocated on the heap may not be aligned 16
      1>Scene.cpp(30): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>Scene.cpp(31): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>Scene.cpp(46): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
-     1>Scene.cpp(53): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
-     1>Scene.cpp(59): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
          Ship.cpp
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(16): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(17): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
@@ -144,23 +127,36 @@
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(26): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(27): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(28): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(32): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(51): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(33): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(52): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(53): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(55): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(54): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\TransformBase.h(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\TransformBase.h(48): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(58): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\TransformBase.h(49): warning C4101: 'nNorm' : unreferenced local variable
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(27): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(30): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(31): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\visualstudioprojects\thrustvector\PhysObjBase.h(32): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
          TextureManager.cpp
-         WICTextureLoader.cpp
          Generating Code...
-     1>Done Building Project "D:\VisualStudioProjects\ThrustVector\Tutorial03.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\VisualStudioProjects\ThrustVector\Release\ThrustVector.exe" /INCREMENTAL /NOLOGO d3d11.lib d3dcompiler.lib dxguid.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\VisualStudioProjects\ThrustVector\Release\ThrustVector.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\VisualStudioProjects\ThrustVector\Release\ThrustVector.lib" /MACHINE:X86 /SAFESEH Release\Tutorial03.res
+         Release\Camera.obj
+         Release\Collision.obj
+         Release\Game.obj
+         Release\Main.obj
+         Release\PlaneDrawable.obj
+         Release\Planet.obj
+         Release\Scene.obj
+         Release\Ship.obj
+         Release\TextureManager.obj
+         Release\WICTextureLoader.obj
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+         Tutorial03.vcxproj -> D:\VisualStudioProjects\ThrustVector\Release\ThrustVector.exe
+     1>Done Building Project "D:\VisualStudioProjects\ThrustVector\Tutorial03.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:15.89
+Time Elapsed 00:00:11.73

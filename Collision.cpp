@@ -138,8 +138,8 @@ void Collision::energyLossModel(double dtColl, double dt){
 	double tangentVelObj1Mag = vecMag(&velSaveComponentObj1);
 	double tangentVelObj2Mag = vecMag(&velSaveComponentObj2);
 
-	double obj1F = ((tangentVelObj1Mag - tangentVelObj1Mag*(1 - o1->getElasticity()))/(dtColl))*o1->getMass()*.02;
-	double obj2F = ((tangentVelObj2Mag - tangentVelObj2Mag*(1 - o2->getElasticity()))/ (dtColl))*o2->getMass()*.02;
+	double obj1F = ((tangentVelObj1Mag - tangentVelObj1Mag*(o1->getElasticity()))/(dtColl))*o1->getMass()*.1;
+	double obj2F = ((tangentVelObj2Mag - tangentVelObj2Mag*(o2->getElasticity()))/ (dtColl))*o2->getMass()*.1;
 
 
 

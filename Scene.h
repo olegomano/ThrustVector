@@ -24,7 +24,6 @@ public:
 	void						registerObject(PhysObjBase* p);
 	~Scene();
 protected:
-	TextureManager*			   sceneTextures;
 	std::vector<GameObjBase*>  gameObjectList;
 	std::vector<DrawableBase*> drawableList;
 	std::vector<PhysObjBase*>  physObjList;

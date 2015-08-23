@@ -3,7 +3,7 @@
 class TransformBase{
 public:
 	TransformBase(){
-		mMatrix = DirectX::XMMatrixIdentity();
+		DirectX::XMStoreFloat4x4(&mMatrix, DirectX::XMMatrixIdentity());
 		for (int i = 0; i < 4; i++){
 			scale[i] = 1;
 		}
@@ -13,9 +13,9 @@ public:
 		origin.x += x;
 		origin.y += y;
 		origin.z += z;
-		mMatrix.r[3].m128_f32[0] += x;
-		mMatrix.r[3].m128_f32[1] += y;
-		mMatrix.r[3].m128_f32[2] += z;
+		mMatrix._41 += x;
+		mMatrix._42 += y;
+		mMatrix._43 += z;
 
 	}
 
@@ -23,14 +23,15 @@ public:
 		origin.x = x;
 		origin.y = y;
 		origin.z = z;
-		mMatrix.r[3].m128_f32[0] = x;
-		mMatrix.r[3].m128_f32[1] = y;
-		mMatrix.r[3].m128_f32[2] = z;
+		mMatrix._41 = x;
+		mMatrix._42 = y;
+		mMatrix._43 = z;
 	}
 
 	void rotate(double angle){
-		mMatrix *= DirectX::XMMatrixRotationZ(angle);
-
+		DirectX::XMMATRIX xMatrix = DirectX::XMLoadFloat4x4(&mMatrix);
+		xMatrix *= DirectX::XMMatrixRotationZ(angle);
+		DirectX::XMStoreFloat4x4(&mMatrix, xMatrix);
 	}
 
 	void rotateCenter(double angle){
@@ -48,13 +49,13 @@ public:
 		DirectX::XMVECTOR nNorm;
 		Vec3 up(0,0,1);
 		Vec3 nRight = crossProduct(newNormal, &up);
-		mMatrix.r[1].m128_f32[0] = newNormal->x;
-		mMatrix.r[1].m128_f32[1] = newNormal->y;
-		mMatrix.r[1].m128_f32[2] = newNormal->z;
+		mMatrix._21 = newNormal->x;
+		mMatrix._22 = newNormal->y;
+		mMatrix._23 = newNormal->z;
 
-		mMatrix.r[0].m128_f32[0] = nRight.x;
-		mMatrix.r[0].m128_f32[1] = nRight.y;
-		mMatrix.r[0].m128_f32[2] = nRight.z;
+		mMatrix._11 = nRight.x;
+		mMatrix._12 = nRight.y;
+		mMatrix._13 = nRight.z;
 	}
 
 	void mulScale(float x, float y, float z){
@@ -79,7 +80,7 @@ public:
 		return &origin;
 	}
 protected:
-	DirectX::XMMATRIX mMatrix;
+	DirectX::XMFLOAT4X4 mMatrix;
 	float scale[4];
 private:
 	Vec3 origin;

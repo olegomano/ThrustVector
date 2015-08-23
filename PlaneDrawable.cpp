@@ -6,12 +6,9 @@ struct bufferData{
 	float uv[2];
 };
 
-bool alloced = false;
-ID3D11Buffer* pPlaneVertexBuffer = nullptr;
-bufferData vertices[6];
-ID3D11Buffer* getPlaneVertexBuffer(ID3D11Device* pd3dDevice){
-	if (!alloced){
-		
+ID3D11Buffer* createPlaneVertexBuffer(ID3D11Device* pd3dDevice){
+		ID3D11Buffer* pPlaneVertexBuffer = nullptr;
+		bufferData vertices[6];
 		vertices[0] = { DirectX::XMFLOAT3(-.5f, -.5f, 0.0f),{ 0, 1 }  }; //lb
 		vertices[1] = { DirectX::XMFLOAT3(-.5f, .5f, 0.0f) ,{ 0, 0 }  }; //lt
 		vertices[2] = { DirectX::XMFLOAT3(.5f, .5f, 0.0f)  ,{ 1, 0 }  }; //rt
@@ -31,15 +28,13 @@ ID3D11Buffer* getPlaneVertexBuffer(ID3D11Device* pd3dDevice){
 		ZeroMemory(&InitData, sizeof(InitData));
 		InitData.pSysMem = vertices;
 		pd3dDevice->CreateBuffer(&bd, &InitData, &pPlaneVertexBuffer);
-		alloced = true;
-	}
-	return pPlaneVertexBuffer;
+		return pPlaneVertexBuffer;
 }
 
 
 void PlaneDrawable::create(ID3D11Device* pd3dDevice, ID3D11DeviceContext*  context, Shader* shader){
 	DrawableBase::create(pd3dDevice, context, shader);
-	pVertexBuffer = getPlaneVertexBuffer(pd3dDevice);
+	pVertexBuffer = createPlaneVertexBuffer(pd3dDevice);
 	stride = sizeof(bufferData);
 	offset = 0;
 }
@@ -60,7 +55,7 @@ PlaneDrawable::PlaneDrawable()
 void PlaneDrawable::draw(float dt){
 	
 	cbModelData updateData;
-	updateData.modelMat = mMatrix;
+	updateData.modelMat = DirectX::XMLoadFloat4x4(&mMatrix);
 	for (int i = 0; i < 4; i++){
 		updateData.scale[i] = scale[i];
 	}
@@ -90,8 +85,8 @@ void PlaneDrawable::draw(float dt){
 	context->VSSetShader(shader->pVertexShader, nullptr, 0);
 	context->PSSetShader(shader->pPixelShader, nullptr, 0);
 	
-	context->PSSetShaderResources(0,1,&txt->ptextureResView);
-	context->PSSetSamplers(0,1,&txt->psamplerState);
+	context->PSSetShaderResources(0,1,&TextureManager::getManager()->getTexture(&txt)->ptextureResView);
+	context->PSSetSamplers(0, 1, &TextureManager::getManager()->getTexture(&txt)->psamplerState);
 
 	context->Draw(6, 0);
 }

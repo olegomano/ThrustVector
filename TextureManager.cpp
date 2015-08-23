@@ -2,8 +2,13 @@
 #define SHIPFOLDER "ships"
 
 
-
 std::map<std::wstring, Texture*> textureMap;
+
+static TextureManager manager;
+TextureManager* TextureManager::getManager(){
+	return &manager;
+}
+
 TextureManager::TextureManager()
 {
 }
@@ -19,7 +24,6 @@ HRESULT TextureManager::createTexture(std::wstring* name){
 	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	sampDesc.MinLOD = 0;
 	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
 	Texture* newTexture = new Texture();
 	result = pDevice->CreateSamplerState(&sampDesc, &newTexture->psamplerState);
 	assert(result == S_OK);
@@ -27,6 +31,10 @@ HRESULT TextureManager::createTexture(std::wstring* name){
 	assert(result == S_OK);
 	newTexture->path = new std::wstring(*name);
 	textureMap[*name] = newTexture;
+	TM_PRINTF("Created Texture: ");
+	TM_PRINTF(std::string(name->begin(), name->end()).c_str());
+	TM_PRINTF("\n");
+
 	return result;
 }
 

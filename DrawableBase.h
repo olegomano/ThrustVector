@@ -2,6 +2,7 @@
 #include "Structs.h"
 #include <vector>
 #include "GameObjBase.h"
+#include "TextureManager.h"
 class DrawableBase : public virtual GameObjBase{
 public:
 	DrawableBase(){
@@ -13,7 +14,7 @@ public:
 		DrawableBase::shader = shader;
 	}
 	virtual void draw(float dt){};
-	void setTexture(Texture* t){
+	void setTexture(std::wstring t){
 		txt = t;
 	};
 	~DrawableBase(){};
@@ -21,9 +22,6 @@ protected:
 	ID3D11Device* pd3dDevice;
 	ID3D11DeviceContext*  context;
 	Shader* shader;
-	Texture* txt;
+	std::wstring txt;
 private:
-
-
-
 };

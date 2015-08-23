@@ -9,8 +9,8 @@ int sum(int num){
 	return res;
 }
 const int trisH = 10;
-const int shipAmount = sum(trisH);
-Ship* ships = new Ship[shipAmount + 1];
+const int shipAmount =  sum(trisH);
+Ship** ships = new Ship*[shipAmount];
 
 
 Scene::Scene(){
@@ -24,41 +24,42 @@ void Scene::createScene(TextureManager* texture, ID3D11Device* pd3dDevice, ID3D1
 	texture->createTexture(&txtName);
 	texture->createTexture(&playerShip);
 	texture->createTexture(&planetTexture);
+	
 	int count = 0;
 	int h = 6;
 	for (int i = 0; i <= trisH; i++){
 		float startX = -h * (i / 2.0);
 		float startY = i * h;
 		for (int b = 0; b < i; b++){
-			ships[count++] = Ship(txtName.c_str(), txtName.c_str(), &Vec3{ startX + b*h, startY, 0 });
+			ships[count++] = new Ship(txtName.c_str(), txtName.c_str(), &Vec3{ startX + b*h, startY, 0 });
 		}
 	}
 	
-	ships[shipAmount - 1] = Ship(txtName.c_str(), txtName.c_str(), &Vec3{0,-2,0 });
+	ships[shipAmount - 1] = new Ship(txtName.c_str(), txtName.c_str(), &Vec3{0,-2,0 });
 	for (int i = 0; i < shipAmount; i++){
-		ships[i].create(pd3dDevice,context,shader);
-		ships[i].setTexture(texture->getTexture(&txtName));
-		ships[i].mulScale(6, 6, 1);
-		registerObject(&ships[i]);
+		ships[i]->create(pd3dDevice,context,shader);
+		ships[i]->setTexture(txtName);
+		ships[i]->mulScale(1, 1, 1);
+		registerObject(ships[i]);
 	}
-	getPlayerShip()->setTexture(texture->getTexture(&playerShip));
+	getPlayerShip()->setTexture(playerShip);
 
 	Planet* p = new Planet(&Vec3(100,0,0));
 	p->create(pd3dDevice, context, shader);
-	p->setTexture(texture->getTexture(&planetTexture));
+	p->setTexture(planetTexture);
 	p->mulScale(35, 35, 1);
 	registerObject(p);
 
 
 	Planet* p2 = new Planet(&Vec3(-100, 0, 0));
 	p2->create(pd3dDevice, context, shader);
-	p2->setTexture(texture->getTexture(&planetTexture));
+	p2->setTexture(planetTexture);
 	p2->mulScale(35, 35, 1);
 	registerObject(p2);
 
 	Planet* p3 = new Planet(&Vec3(0, 100, 0));
 	p3->create(pd3dDevice, context, shader);
-	p3->setTexture(texture->getTexture(&planetTexture));
+	p3->setTexture(planetTexture);
 	p3->mulScale(15, 15, 1);
 	//registerObject(p3);
 	
@@ -85,7 +86,7 @@ void Scene::registerObject(PhysObjBase* p){
 }
 
 Ship* Scene::getPlayerShip(){
-	return &ships[shipAmount -1];
+	return ships[shipAmount -1];
 
 }
 

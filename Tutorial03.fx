@@ -33,8 +33,8 @@ VS_OUTPUT VS( VS_INPUT input)
 	for (int i = 0; i < 4; i++){
 		scaledPos[i] = input.Pos[i] * scale[i];
 	}
-	float4 worldPos = mul(modelMat, scaledPos);
-	float4 camSpace = mul(worldPos, camMat);
+	float4 worldPos = mul(modelMat,scaledPos);
+	float4 camSpace = mul(camMat,worldPos);
 	float4 finalPos = camSpace;
 	finalPos[0] = (perspectiveData[2] * finalPos[0]) / (finalPos[2] + perspectiveData[2]);
 	finalPos[1] = (perspectiveData[2] * finalPos[1]) / (finalPos[2] + perspectiveData[2]);

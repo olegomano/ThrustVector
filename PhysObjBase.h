@@ -17,8 +17,7 @@ public:
 		angularVelocity = angularVelocity + (torque / momentInertia)*dt;
 		if (angularVelocity != 0){
 			int a = 5;
-		}
-		
+		}	
 	}
 
 	virtual bool checkCollision(PhysObjBase* other){

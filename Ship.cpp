@@ -4,18 +4,23 @@
 
 void Ship::draw(float dt){
 	
-	rotateCenter(angularVelocity*dt);
+	if (angularVelocity != 0){
+		rotateCenter(angularVelocity*dt);
+	}
 	angularVelocity *= .995;
 	if (angularVelocity < .0001 && angularVelocity > -.0001){
 		angularVelocity = 0;
 	}
-	if (vecMag(&getVelocity()) > 0 && angularVelocity < 3 ){
+	
+	if (vecMag(&getVelocity()) > angularVelocity  ){
 		Vec3* currForward = getForward();
 		Vec3  newForward = *currForward + (getVelocity() - *currForward)*.005;
 		setNormal(&tUnitVec(&newForward));
 	}
+	
+	double velMag = vecMag(&getVelocity());
 	cbModelData updateData;
-	updateData.modelMat = mMatrix;
+	updateData.modelMat = DirectX::XMLoadFloat4x4(&mMatrix);
 	for (int i = 0; i < 4; i++){
 		updateData.scale[i] = scale[i];
 	}
@@ -44,8 +49,8 @@ void Ship::draw(float dt){
 	context->VSSetShader(shader->pVertexShader, nullptr, 0);
 	context->PSSetShader(shader->pPixelShader, nullptr, 0);
 
-	context->PSSetShaderResources(0, 1, &txt->ptextureResView);
-	context->PSSetSamplers(0, 1, &txt->psamplerState);
+	context->PSSetShaderResources(0, 1, &TextureManager::getManager()->getTexture(&txt)->ptextureResView);
+	context->PSSetSamplers(0, 1, &TextureManager::getManager()->getTexture(&txt)->psamplerState);
 
 	context->Draw(6, 0);
 }

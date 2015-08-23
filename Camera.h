@@ -1,7 +1,7 @@
 #pragma once
 #include "Structs.h"
 #include "TransformBase.h"
-
+#include "PhysObjBase.h"
 class Camera : public TransformBase
 {
 public:
@@ -17,8 +17,13 @@ public:
 	float getFocusDistance(){
 		return perspectiveData[2];
 	}
+	void setFollowObj(PhysObjBase* t){
+		followObj = t;
+	}
+	void updateCameraPosition(double dt);
 	~Camera();
 private:
 	float perspectiveData[4]; //near far focus
+	PhysObjBase* followObj = nullptr;
 };
 
